@@ -11,4 +11,7 @@
 |
 */
 
-Route::get('/', 'StaticPagesController@index')->name('index');
+Route::get('/', 'StaticPagesController@index')->name('index');//首页
+
+Route::get('/signup','UserController@create')->name('signup');//用户注册
+resource('user', 'UserController');//用户CURD

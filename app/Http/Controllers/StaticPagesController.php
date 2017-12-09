@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Alert;
 
 class StaticPagesController extends Controller
 {
@@ -16,6 +17,7 @@ class StaticPagesController extends Controller
      */
     public function index()
     {
+         // Alert::success('恭喜你，成功投资50000元！')->persistent('关闭');//手动关闭
         return view('static_pages/index');
     }
 

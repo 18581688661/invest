@@ -69,10 +69,14 @@
 
 <!-- 项目列表 -->
 <div class="container col-lg-9">
-    <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size: 20px;text-align: center">项目列表</h3>
+        </div>
+        <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
         <div>
             <div style="float: left;font-size: 25px;color: #777;margin-top: 28px;margin-left: 66px">清风4期</div>
-            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;">投资</button></div>
+            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;font-weight: 600">投资</button></div>
         </div>
         <div>
             <div style="float: left;width: 186px">
@@ -96,11 +100,11 @@
                 <p style="font-size: 30px;text-align: center;margin-top: 12px">¥4330000</p>
             </div>
         </div>
-    </div>
-    <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
+        </div>
+        <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
         <div>
             <div style="float: left;font-size: 25px;color: #777;margin-top: 28px;margin-left: 66px">清风3期</div>
-            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;">投资</button></div>
+            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;font-weight: 600">投资</button></div>
         </div>
         <div>
             <div style="float: left;width: 186px">
@@ -124,11 +128,11 @@
                 <p style="font-size: 30px;text-align: center;margin-top: 12px">¥220000</p>
             </div>
         </div>
-    </div>
-    <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
+        </div>
+        <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
         <div>
             <div style="float: left;font-size: 25px;color: #777;margin-top: 28px;margin-left: 66px">清风2期</div>
-            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;">投资</button></div>
+            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;font-weight: 600">投资</button></div>
         </div>
         <div>
             <div style="float: left;width: 186px">
@@ -152,11 +156,11 @@
                 <p style="font-size: 30px;text-align: center;margin-top: 12px">¥20000</p>
             </div>
         </div>
-    </div>
-    <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
+        </div>
+        <div style="background: #F7F7F9;height: 200px;border-bottom: 1px dashed">
         <div>
             <div style="float: left;font-size: 25px;color: #777;margin-top: 28px;margin-left: 66px">清风1期</div>
-            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;">投资</button></div>
+            <div><button class="btn btn-danger" style="margin-left: 30px;margin-top: 28px;font-size: 15px;font-weight: 600">投资</button></div>
         </div>
         <div>
             <div style="float: left;width: 186px">
@@ -180,22 +184,28 @@
                 <p style="font-size: 30px;text-align: center;margin-top: 12px">¥1000</p>
             </div>
         </div>
+        </div>
     </div>
 </div>
 
 <!-- 平台注册人数和投资金额 -->
 <div class="container col-lg-3">
-    <div style="background: #F7F7F9">
-            <p style="text-align: center;font-size: 20px;color: #777;margin-top: 5px">平台已成功运行</p>
-            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">1天</p>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size: 20px;text-align: center">平台数据</h3>
+        </div>
+        <div style="background: #F7F7F9;height: 100%">
+            <p style="text-align: center;font-size: 20px;color: #777;">平台已成功运行</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">3天</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台总注册人数</p>
-            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">132人</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">342人</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台今日注册人数</p>
-            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">2人</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">19人</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台累计投资金额</p>
-            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥123233</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥1232100</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台今日投资金额</p>
-            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥3233</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥32300</p>
+        </div>
     </div>
 </div>
 
