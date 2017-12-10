@@ -1,7 +1,19 @@
 <?php
 
 return [
-
+    
+    'multi-auth' => [
+    'user' => [
+        'driver' => 'eloquent',
+        'model'  => App\Models\User::class,
+        'table'  => 'user'
+    ],
+    'manager' => [
+        'driver' => 'eloquent',
+        'model'  => App\Models\Manager::class,
+        'table'  => 'manager'
+    ]
+],
     /*
     |--------------------------------------------------------------------------
     | Default Authentication Driver
@@ -15,7 +27,7 @@ return [
     |
     */
 
-    'driver' => 'eloquent',
+    // 'driver' => 'eloquent',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +40,7 @@ return [
     |
     */
 
-    'model' => App\Models\User::class,
+    // 'model' => App\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +53,7 @@ return [
     |
     */
 
-    'table' => 'users',
+    // 'table' => 'users',
 
     /*
     |--------------------------------------------------------------------------

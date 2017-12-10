@@ -17,10 +17,11 @@ class CreateUserTable extends Migration
             $table->increments('id');
             $table->string('username')->unique();
             $table->string('password', 60);
-            $table->string('email',30)->unique();
+            $table->string('email',30);//测试完改回唯一
             $table->string('real_name')->nullable();
             $table->string('ID_card')->nullable()->unique();
             $table->string('mobile')->nullable()->unique();
+            $table->float('balance')->default(0);
             $table->string('image_url')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();

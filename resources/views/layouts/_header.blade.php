@@ -9,7 +9,7 @@
                 </ul>
                 <div class="container">
                     <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">登录</a></li>
+                      <li><a href="{{ route('login') }}">登录</a></li>
                       <li><a href="{{ route('signup') }}">注册</a></li>
                     </ul>
                 </div>

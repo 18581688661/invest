@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "caouecs/laravel-lang": "~3.0",
-        "uxweb/sweet-alert": "^1.4"
+        "uxweb/sweet-alert": "^1.4",
+        "kbwebs/multiauth": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

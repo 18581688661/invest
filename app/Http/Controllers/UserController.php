@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use Alert;
+use Mail;
 
 class UserController extends Controller
 {
@@ -24,24 +25,82 @@ class UserController extends Controller
         $this->validate($request, [
         'username' => 'required|max:50|unique:user',
         'password' => 'required|confirmed|min:6',
-        'email'    => 'required|email|unique:user',
+        'email'    => 'required|email',//测试完改回唯一
         'verification_code' =>'required|digits:6'
         ]);
-        // if ($request->verification_code==$_SESSION["verify_code"]) {
-        $user=User::create([
-            'username'=>$request->username,
-            'password'=>bcrypt($request->password),
-            'email'=>$request->email,
-            ]);
-        // $this->sendEmailConfirmationTo($user);
-        // session()->flash('success', '恭喜你，注册成功！');
-        Alert::success('恭喜你，注册成功！');
-        return redirect('/');
-        // }
-        // else
-        // {
-        //     session()->flash('danger', '短信验证码输入有误，请重新输入！');
-        //     return redirect()->back();
-        // }
+        if ($request->verification_code==$_SESSION["verify_code"]) {
+            $user=User::create([
+                'username'=>$request->username,
+                'password'=>bcrypt($request->password),
+                'email'=>$request->email,
+                ]);
+            // session()->flash('success', '恭喜你，注册成功！');
+            Alert::success('恭喜你，注册成功！');
+            return redirect('/');
+        }
+        else
+        {
+            // session()->flash('danger', '短信验证码输入有误，请重新输入！');
+            Alert::error('验证码输入有误，请重新输入！');
+            return redirect()->back();
+        }
     }
+
+    public function getReset()//找回密码页
+    {
+        return view('user.password_reset');
+    }
+
+    public function postRset(Request $request)//找回密码操作
+    {
+        session_start();
+        $this->validate($request, [
+        'password' => 'required|confirmed|min:6',
+        'email' => 'required|email',
+        'verification_code' =>'required|digits:6'
+        ]);
+        if($user=User::where('email',$request->email)->first())
+        {
+            if ($request->verification_code==$_SESSION["verify_code"]) {
+            $user->update([
+            'password' => bcrypt($request->password),
+            ]);
+            // session()->flash('success', '恭喜你，密码修改成功！');
+            Alert::success('恭喜你,密码修改成功!');
+            return redirect('/');
+            }
+            else
+            {
+                // session()->flash('danger', '验证码输入有误，请重新输入！');
+                Alert::error('验证码输入有误，请重新输入！');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            // session()->flash('danger', '手机号不存在，请重新输入！');
+            Alert::info('该邮箱尚未注册,请重新输入！');
+            return redirect()->back();
+        }
+        
+    }
+
+    public function show($id)//个人中心
+    {
+        $user = User::findOrFail($id);
+        return view('user.show', compact('user'));
+    }
+
+    protected function email()//发送邮件
+    {
+        Session_Start();
+        $code=rand(100000,999999);
+        $_SESSION["verify_code"]=$code;
+        Mail::send('email.signup',['code'=>$code],function($message){
+            $to = $_GET["email"];
+            $message ->to($to)->subject('【清风理财】验证码');
+        });
+    }
+
+
 }
