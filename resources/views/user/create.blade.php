@@ -63,6 +63,7 @@ window.onload = function ()
       this.disabled = "disabled";
       this.style.cursor = "wait";
       this.value = "重新发送 (" + sleep-- + ")";
+      toastr.success('添加成功！');
       interval = setInterval (function ()
       {
         if (sleep == 0)

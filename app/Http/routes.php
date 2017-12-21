@@ -16,13 +16,18 @@ Route::get('/', 'StaticPagesController@index')->name('index');//首页
 Route::get('/email','UserController@email')->name('email');//发送邮箱验证码
 
 Route::get('/signup','UserController@create')->name('signup');//用户注册
-get('login', 'SessionsController@create')->name('login');//用户登录
-post('login', 'SessionsController@store')->name('login');//用户登录
+Route::get('login', 'SessionsController@create')->name('login');//用户登录
+Route::post('login', 'SessionsController@store')->name('login');//用户登录
 resource('user', 'UserController');//用户CURD
+Route::get('/show','UserController@show')->name('show');//用户注册
 
-get('mana_login', 'SessionsController@mana_create')->name('mana_login');//管理员登录
-post('mana_login', 'SessionsController@mana_store')->name('mana_login');//管理员登录
+Route::get('mana_login', 'SessionsController@mana_create')->name('mana_login');//管理员登录
+Route::post('mana_login', 'SessionsController@mana_store')->name('mana_login');//管理员登录
 
-get('password/reset', 'UserController@getReset')->name('password.reset');//找回密码
-post('password/reset', 'UserController@postRset')->name('password.reset');//找回密码
+Route::delete('logout', 'SessionsController@destroy')->name('logout');//登出
 
+Route::get('password/reset', 'UserController@getReset')->name('password.reset');//找回密码
+Route::post('password/reset', 'UserController@postRset')->name('password.reset');//找回密码
+
+Route::get('/message','UserController@message')->name('message');//消息中心
+Route::get('/test','UserController@test')->name('test');//消息中心

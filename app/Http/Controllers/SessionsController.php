@@ -28,7 +28,8 @@ class SessionsController extends Controller
     	{
             // session()->flash('success','欢迎回来！');
             Alert::success('欢迎回来！'); 
-            return redirect()->intended(route('user.show',[Auth::user()->get()]));
+            // return redirect()->intended(route('user.show',[Auth::user()->get()]));
+            return redirect()->intended(route('show'));
     	}
     	else
     	{
@@ -41,7 +42,8 @@ class SessionsController extends Controller
     public function destroy()
     {
         Auth::logout();
-        session()->flash('success','您已成功退出！');
+        // session()->flash('success','您已成功退出！');
+        Alert::info('您已成功退出登录！'); 
         return redirect('/');
     }
 }

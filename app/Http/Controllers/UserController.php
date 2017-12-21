@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Alert;
 use Mail;
+use Auth;
 
 class UserController extends Controller
 {
@@ -85,10 +86,16 @@ class UserController extends Controller
         
     }
 
-    public function show($id)//个人中心
+    public function show()//个人中心
     {
+        $id=Auth::user()->get()->id;
         $user = User::findOrFail($id);
         return view('user.show', compact('user'));
+    }
+
+    public function message()//消息中心
+    {
+        return view('user.message');
     }
 
     protected function email()//发送邮件
@@ -100,7 +107,6 @@ class UserController extends Controller
             $to = $_GET["email"];
             $message ->to($to)->subject('【清风理财】验证码');
         });
+        // return response()->json(['success']);
     }
-
-
 }
