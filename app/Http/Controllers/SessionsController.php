@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use Alert;
+use Carbon\Carbon;
 
 class SessionsController extends Controller
 {
@@ -26,6 +27,11 @@ class SessionsController extends Controller
     	$credentials=['username'=>$request->username,'password'=>$request->password,];
     	if(Auth::user()->attempt($credentials,$request->has('remember')))
     	{
+            $user=Auth::user()->get();
+            //数据库里面使用两个字段来存储登录时间,一个是上次登录时间,一个是本次登录时间.每次用户登录的时候,将本次登录时间存入上次登录时间中,将当前时间存入本次登录时间字段中
+            $user->last_login_time=$user->this_login_time;
+            $user->this_login_time=Carbon::now();
+            $user->save();
             // session()->flash('success','欢迎回来！');
             Alert::success('欢迎回来！'); 
             // return redirect()->intended(route('user.show',[Auth::user()->get()]));

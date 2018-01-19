@@ -30,4 +30,9 @@ Route::get('password/reset', 'UserController@getReset')->name('password.reset');
 Route::post('password/reset', 'UserController@postRset')->name('password.reset');//找回密码
 
 Route::get('/message','UserController@message')->name('message');//消息中心
-Route::get('/test','UserController@test')->name('test');//消息中心
+
+Route::get('/certification','UserController@certification')->name('certification');//实名认证
+Route::post('/certificate','UserController@certificate')->name('certificate');//实名认证
+
+Route::get('/risk_appraisal','UserController@risk_appraisal')->name('risk_appraisal');//风险测评
+Route::post('/risk_appraisal','UserController@appraisal')->name('risk_appraisal');//风险测评

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Carbon\Carbon;
 
 class CreateUserTable extends Migration
 {
@@ -22,7 +23,13 @@ class CreateUserTable extends Migration
             $table->string('ID_card')->nullable()->unique();
             $table->string('mobile')->nullable()->unique();
             $table->float('balance')->default(0);
+            $table->float('profit')->default(0);
             $table->string('image_url')->nullable()->unique();
+            $table->dateTime('certification_time');
+            $table->dateTime('last_login_time')->default(Carbon::now());
+            $table->dateTime('this_login_time')->default(Carbon::now());
+            $table->dateTime('risk_time');
+            $table->Integer('risk_score');
             $table->rememberToken();
             $table->timestamps();
         });

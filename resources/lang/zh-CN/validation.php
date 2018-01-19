@@ -147,6 +147,8 @@ return [
         'available'             => '可用的',
         'size'                  => '大小',
         'verification_code'     =>'验证码',
+        'real_name'             =>'真实姓名',
+        'ID_card'               =>'身份证',
     ],
 
 ];

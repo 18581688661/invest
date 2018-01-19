@@ -6,7 +6,7 @@
                 interval:2500
             })
         })
-    </script>
+</script>
 @stop
 @section('content')
 <!-- 首页轮播图 -->

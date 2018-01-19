@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 use App\Models\User;
 use Alert;
@@ -96,6 +97,31 @@ class UserController extends Controller
     public function message()//消息中心
     {
         return view('user.message');
+    }
+
+    public function certification()
+    {
+        return view('user.certification');
+    }
+
+    public function certificate(Request $request)
+    {
+        $this->validate($request, [
+        'real_name' => 'required',
+        'ID_card' => 'required|digits:18'
+        ]);
+        $user=Auth::user()->get();
+        $user->real_name=$request->real_name;
+        $user->ID_card=$request->ID_card;
+        $user->certification_time=Carbon::now();
+        $user->save();
+        Alert::success('恭喜你，认证成功！');
+        return redirect()->back();
+    }
+
+    public function risk_appraisal()
+    {
+        return view('user.risk_appraisal');
     }
 
     protected function email()//发送邮件
