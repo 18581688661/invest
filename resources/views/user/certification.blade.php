@@ -40,17 +40,18 @@
             @else
             <div class="container col-lg-5" style="margin-top: 20px">
                 <form method="POST" action="{{ route('certificate') }}">
-                @include('shared.errors')
+                <!-- @include('shared.errors') -->
+                @include('shared.messages')
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="real_name">真实姓名：</label>
-                    <input type="text" name="real_name" class="form-control" value="{{ old('real_name') }}">
+                    <input type="text" name="real_name" class="form-control" value="{{ old('real_name') }}" required>
                 </div>
                 <div class="form-group">
                     <label for="ID_card">身份证：</label>
-                    <input type="text" name="ID_card" class="form-control" value="{{ old('ID_card') }}">
+                    <input type="text" name="ID_card" class="form-control" value="{{ old('ID_card') }}" required>
                 </div>
-                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="submit" class="btn btn-success">提交</button>
             </form>
             </div>
             @endif

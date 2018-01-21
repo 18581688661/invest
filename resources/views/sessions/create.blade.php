@@ -16,12 +16,12 @@
 
           <div class="form-group">
             <label for="username">用户名：</label>
-            <input type="text" name="username" class="form-control" value="{{ old('username') }}">
+            <input type="text" name="username" class="form-control" value="{{ old('username') }}" required>
           </div>
 
           <div class="form-group">
             <label for="password">密码（<a href="{{ route('password.reset') }}">忘记密码</a>）：</label>
-            <input type="password" name="password" class="form-control" value="{{ old('password') }}">
+            <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
           </div>
 
           <div class="checkbox">

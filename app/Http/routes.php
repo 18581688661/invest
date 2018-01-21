@@ -19,7 +19,7 @@ Route::get('/signup','UserController@create')->name('signup');//用户注册
 Route::get('login', 'SessionsController@create')->name('login');//用户登录
 Route::post('login', 'SessionsController@store')->name('login');//用户登录
 resource('user', 'UserController');//用户CURD
-Route::get('/show','UserController@show')->name('show');//用户注册
+Route::get('/show','UserController@show')->name('show');//个人中心
 
 Route::get('mana_login', 'SessionsController@mana_create')->name('mana_login');//管理员登录
 Route::post('mana_login', 'SessionsController@mana_store')->name('mana_login');//管理员登录
@@ -35,4 +35,4 @@ Route::get('/certification','UserController@certification')->name('certification
 Route::post('/certificate','UserController@certificate')->name('certificate');//实名认证
 
 Route::get('/risk_appraisal','UserController@risk_appraisal')->name('risk_appraisal');//风险测评
-Route::post('/risk_appraisal','UserController@appraisal')->name('risk_appraisal');//风险测评
+Route::post('/appraisal','UserController@appraisal')->name('appraisal');//风险测评

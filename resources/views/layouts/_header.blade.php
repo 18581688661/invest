@@ -16,7 +16,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('user.show', Auth::user()->get()->id) }}">个人中心</a></li>
+                                <li><a href="{{ route('show')}}">个人中心</a></li>
                                 <li class="divider"></li>
                                 <li>
                                     <a id="logout" href="#">
@@ -40,7 +40,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('user.show', Auth::user()->get()->id) }}">个人中心</a></li>
+                                <li><a href="{{ route('user.show') }}">个人中心</a></li>
                                 <li class="divider"></li>
                                 <li>
                                     <a id="logout" href="#">
