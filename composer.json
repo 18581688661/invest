@@ -10,7 +10,8 @@
         "caouecs/laravel-lang": "~3.0",
         "uxweb/sweet-alert": "^1.4",
         "kbwebs/multiauth": "~1.0",
-        "yuanchao/pjax-for-laravel-5": "dev-master"
+        "yuanchao/pjax-for-laravel-5": "dev-master",
+        "mews/captcha": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

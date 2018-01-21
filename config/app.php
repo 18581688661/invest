@@ -118,6 +118,7 @@ return [
         // Illuminate\Auth\AuthServiceProvider::class,
         Kbwebs\MultiAuth\AuthServiceProvider::class,
         YuanChao\Pjax\EndaPjaxServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
@@ -196,7 +197,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Alert'     => UxWeb\SweetAlert\SweetAlert::class,
-
+        'Captcha'   => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];

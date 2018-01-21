@@ -87,6 +87,7 @@ return [
     'unique'               => ':attribute 已经存在。',
     'uploaded'             => ':attribute 上传失败。',
     'url'                  => ':attribute 格式不正确。',
+    'captcha'              => ':attribute 输入有误',
 
     /*
     |--------------------------------------------------------------------------
@@ -149,6 +150,7 @@ return [
         'verification_code'     =>'验证码',
         'real_name'             =>'真实姓名',
         'ID_card'               =>'身份证',
+        'captcha'               =>'验证码',
     ],
 
 ];

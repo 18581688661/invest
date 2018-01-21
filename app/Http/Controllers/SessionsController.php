@@ -22,7 +22,8 @@ class SessionsController extends Controller
     {
     	$this->validate($request,[
     		'username'=>'required|max:25',
-    		'password'=>'required|min:6'
+    		'password'=>'required|min:6',
+            'captcha' =>'captcha'
     		]);
     	$credentials=['username'=>$request->username,'password'=>$request->password,];
     	if(Auth::user()->attempt($credentials,$request->has('remember')))

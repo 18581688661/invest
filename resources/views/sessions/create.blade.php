@@ -20,17 +20,27 @@
           </div>
 
           <div class="form-group">
-            <label for="password">密码（<a href="{{ route('password.reset') }}">忘记密码</a>）：</label>
+            <label for="password">密码：</label>
             <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
           </div>
 
-          <div class="checkbox">
+          <div class="form-group">
+            <label for="captcha">验证码：</label>
+            <input type="text" name="captcha" class="form-control" value="{{ old('captcha') }}" required>
+          </div>
+
+          <div class="form-group">
+            <img src="{{captcha_src('flat')}}">
+          </div>
+
+          <div class="checkbox form-group">
             <label><input type="checkbox" name="remember">记住我</label>
           </div>
 
-          <button type="submit" class="btn btn-primary">登录</button>
+           <button type="submit" class="btn btn-primary">登录</button>
         </form>
         <hr>
+        <a href="{{ route('password.reset') }}">忘记密码？</a>
         <p>还没有账号？<a href="{{ route('signup') }}">现在注册！</a></p>
       </div>
     </div>
