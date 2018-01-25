@@ -3,9 +3,9 @@
 @section('content')
 <div class="container col-lg-2" style="border-right: 1px dashed">
 	<ul class="nav nav-pills nav-stacked">
-		<li style="text-align: center"><a href="{{ route('show') }}" style="font-size: 17px"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp账户中心</a></li>
-		<li style="text-align: center"><a href="{{ route('message') }}" style="font-size: 17px"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp消息中心</a></li>
-		<li style="text-align: center"><a href="#collapse1" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp资金管理</a></li>
+		<li style="text-align: center"><a href="{{ route('show') }}" style="font-size: 17px"><span class="glyphicon glyphicon-home"></span>&nbsp&nbsp账户中心</a></li>
+		<li style="text-align: center"><a href="{{ route('message') }}" style="font-size: 17px"><span class="glyphicon glyphicon-bell"></span>&nbsp&nbsp消息中心</a></li>
+		<li style="text-align: center"><a href="#collapse1" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp资金管理</a></li>
         <div class="collapse " id="collapse1">
             <ul class="nav">
                 <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
@@ -14,7 +14,7 @@
                 <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
             </ul>
         </div>
-        <li style="text-align: center"><a href="#collapse2" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp投资管理</a></li>
+        <li style="text-align: center"><a href="#collapse2" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp投资管理</a></li>
         <div class="collapse " id="collapse2">
             <ul class="nav">
                 <li style="text-align: center"><a href="#" style="font-size: 16px">所有已投项目</a></li>
@@ -25,9 +25,9 @@
                 <li style="text-align: center"><a href="#" style="font-size: 16px">零活宝</a></li>
             </ul>
         </div>
-        <li style="text-align: center"><a href="{{ route('certification') }}" style="font-size: 17px"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp实名认证</a></li>
-        <li style="text-align: center" class="active"><a href="{{ route('risk_appraisal') }}" style="font-size: 17px"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp风险测评</a></li>
-        <li style="text-align: center"><a href="#" style="font-size: 17px"><span class="glyphicon glyphicon-tag"></span>&nbsp&nbsp账户安全</a></li>
+        <li style="text-align: center"><a href="{{ route('certification') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp实名认证</a></li>
+        <li style="text-align: center" class="active"><a href="{{ route('risk_appraisal') }}" style="font-size: 17px"><span class="glyphicon glyphicon-file"></span>&nbsp&nbsp风险测评</a></li>
+        <li style="text-align: center"><a href="{{ route('security') }}" style="font-size: 17px"><span class="glyphicon glyphicon-lock"></span>&nbsp&nbsp账户安全</a></li>
     </ul>
 </div>
 <div class="container col-lg-10">

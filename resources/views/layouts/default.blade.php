@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/sweetalert.css">
     <link href="http://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
-    @yield('script')
+    <link href="css/component.css" rel="stylesheet">
+
   </head>
     <body>
         @include('layouts._header')
@@ -19,7 +20,11 @@
     <script src="/js/sweetalert.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/modalEffects.js"></script>
+
     @include('sweet::alert')
+    @yield('script')
     <!-- @include('pjax::pjax') -->
   </body>
 </html>

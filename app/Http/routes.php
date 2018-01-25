@@ -36,3 +36,5 @@ Route::post('/certificate','UserController@certificate')->name('certificate');//
 
 Route::get('/risk_appraisal','UserController@risk_appraisal')->name('risk_appraisal');//风险测评
 Route::post('/appraisal','UserController@appraisal')->name('appraisal');//风险测评
+
+Route::get('/security','UserController@security')->name('security');//安全中心

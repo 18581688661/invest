@@ -22,14 +22,15 @@ class CreateUserTable extends Migration
             $table->string('real_name')->nullable();
             $table->string('ID_card')->nullable()->unique();
             $table->string('mobile')->nullable()->unique();
+            $table->string('contact')->nullable();
             $table->float('balance')->default(0);
             $table->float('profit')->default(0);
             $table->string('image_url')->nullable()->unique();
-            $table->dateTime('certification_time');
+            $table->dateTime('certification_time')->nullable();
             $table->dateTime('last_login_time')->default(Carbon::now());
             $table->dateTime('this_login_time')->default(Carbon::now());
-            $table->dateTime('risk_time');
-            $table->Integer('risk_score');
+            $table->dateTime('risk_time')->nullable();
+            $table->Integer('risk_score')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

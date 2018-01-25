@@ -1,77 +1,59 @@
 @extends('layouts.default')
-@section('title','个人中心')
+@section('title','消息中心')
 @section('content')
 <div class="container col-lg-2" style="border-right: 1px dashed">
   <ul class="nav nav-pills nav-stacked">
-    <li style="text-align: center"><a href="{{ route('show') }}">账户中心</a></li>
-    <li style="text-align: center" class="active"><a href="{{ route('message') }}">消息中心</a></li>
-    <li style="text-align: center"><a href="#">资金管理</a></li>
-    <li style="text-align: center"><a href="#">投资管理</a></li>
-    <li style="text-align: center"><a href="#">交易明细</a></li>
-    <li style="text-align: center"><a href="#">账户安全</a></li>
+    <li style="text-align: center"><a href="{{ route('show') }}" style="font-size: 17px"><span class="glyphicon glyphicon-home"></span>&nbsp&nbsp账户中心</a></li>
+    <li style="text-align: center" class="active"><a href="{{ route('message') }}" style="font-size: 17px"><span class="glyphicon glyphicon-bell"></span>&nbsp&nbsp消息中心</a></li>
+    <li style="text-align: center"><a href="#collapse1" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp资金管理</a></li>
+        <div class="collapse " id="collapse1">
+            <ul class="nav">
+                <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">充值</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">提现</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
+            </ul>
+        </div>
+    <li style="text-align: center"><a href="#collapse2" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp投资管理</a></li>
+        <div class="collapse " id="collapse2">
+            <ul class="nav">
+                <li style="text-align: center"><a href="#" style="font-size: 16px">所有已投项目</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">回款中项目</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">已回款项目</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">转让中项目</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">已转让项目</a></li>
+                <li style="text-align: center"><a href="#" style="font-size: 16px">零活宝</a></li>
+            </ul>
+        </div>
+    <li style="text-align: center"><a href="{{ route('certification') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp实名认证</a></li>
+        <li style="text-align: center"><a href="{{ route('risk_appraisal') }}" style="font-size: 17px"><span class="glyphicon glyphicon-file"></span>&nbsp&nbsp风险测评</a></li>
+        <li style="text-align: center"><a href="{{ route('security') }}" style="font-size: 17px"><span class="glyphicon glyphicon-lock"></span>&nbsp&nbsp账户安全</a></li>
   </ul>
 </div>
-  <div class="container col-lg-10">
-    <p style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 30px">&nbsp&nbsp账户中心</p>
-    <p style="font-size: 14px;color: #999;margin-top: 20px">欢迎您！{{Auth::user()->get()->username}}</p>
-    <div>
-      <div style="font-size: 18px;float: left;margin-top: 5px">可用余额：¥<p style="font-size: 18px;float:right">10</p></div>
-      <button class="btn" style="background: #FFAC2A;margin-left:820px;"><a href="#" style="color: #FFFFFF;font-weight: 900">充值</a></button>
-      <button class="btn btn-success" style="margin-left: 2px"><a href="#" style="color: #FFFFFF;font-weight: 900">提现</a></button>
-    </div>
-    <hr>
-    <div style="background: #F7F7F9">
-            <div style="float: left;width: 265px;background: #F7F7F9">
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 24px">资产总额</p>
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 12px">¥1000</p>
+<div class="container col-lg-10">
+  <h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp消息中心</h4>
+  @if(Auth::user()->get()->real_name)
+  <p style="font-size: 14px;color: #999;margin-top: 20px">您已完成实名认证！</p>
+  <h4 style="color: #999;margin-top: 20px;">姓名：{{Auth::user()->get()->real_name}}</h4>
+    <h4 style="color: #999;margin-top: 20px;">身份证：{{Auth::user()->get()->ID_card}}</h4>
+        <h4 style="color: #999;margin-top: 20px;">认证时间：{{Auth::user()->get()->certification_time}}</h4>
+            @else
+            <div class="container col-lg-5" style="margin-top: 20px">
+                <form method="POST" action="{{ route('certificate') }}">
+                <!-- @include('shared.errors') -->
+                @include('shared.messages')
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="real_name">真实姓名：</label>
+                    <input type="text" name="real_name" class="form-control" value="{{ old('real_name') }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="ID_card">身份证：</label>
+                    <input type="text" name="ID_card" class="form-control" value="{{ old('ID_card') }}" required>
+                </div>
+                <button type="submit" class="btn btn-success">提交</button>
+            </form>
             </div>
-            <div style="float: left;width: 265px;background: #F7F7F9">
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 24px">在投资金</p>
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 12px">¥800</p>
-            </div>
-            <div style="float: left;width: 265px;background: #F7F7F9">
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 24px">冻结资金</p>
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 12px">¥200</p>
-            </div>
-            <div style="float: left;width: 265px;background: #F7F7F9">
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 24px">累计收益</p>
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 12px">¥200</p>
-            </div>
+            @endif
         </div>
-        <div>
-          <p style="font-size: 20px;margin-top: 140px">我的交易明细</p>
-          <table class="table table-striped" style="width: 1060px">
-            <tr>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">时间</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">交易类型</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">金额</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">备注</td>
-            </tr>
-            <tr>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">2017年12月17日17:57:01</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">支付宝充值</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">¥1000</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">备注</td>
-            </tr>
-            <tr>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">2017年12月17日17:45:11</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">微信充值</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">¥3000</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">备注</td>
-            </tr>
-            <tr>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">2017年12月17日17:34:54</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">网银充值</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">¥4400</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">备注</td>
-            </tr>
-            <tr>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">2017年12月17日17:21:23</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">支付宝充值</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">¥10</td>
-              <td class="text-center" style="vertical-align: middle;width: 600px;font-size: 18px;color: #666">备注</td>
-            </tr>
-          </table>
-        </div>
-  </div>
 @stop

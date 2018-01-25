@@ -15,17 +15,17 @@
           {{ csrf_field() }}
 
           <div class="form-group">
-            <label for="username">用户名：</label>
+            <label for="username" style="width: 80px;">用户名：</label>
             <input type="text" name="username" class="form-control" value="{{ old('username') }}" required>
           </div>
 
           <div class="form-group">
-            <label for="password">密码：</label>
+            <label for="password" style="width: 80px;">密码：</label>
             <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
           </div>
 
           <div class="form-group">
-            <label for="captcha">验证码：</label>
+            <label for="captcha" style="width: 80px;">验证码：</label>
             <input type="text" name="captcha" class="form-control" value="{{ old('captcha') }}" required>
           </div>
 

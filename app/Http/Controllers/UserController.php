@@ -99,12 +99,12 @@ class UserController extends Controller
         return view('user.message');
     }
 
-    public function certification()
+    public function certification()//实名认证页
     {
         return view('user.certification');
     }
 
-    public function certificate(Request $request)
+    public function certificate(Request $request)//实名认证
     {
         $this->validate($request, [
         'real_name' => 'required',
@@ -129,12 +129,12 @@ class UserController extends Controller
         }        
     }
 
-    public function risk_appraisal()
+    public function risk_appraisal()//风险测评页
     {
         return view('user.risk_appraisal');
     }
 
-    public function appraisal(Request $request)
+    public function appraisal(Request $request)//风险测评
     {
         $score=0;
         for($i=1;$i<=14;$i++)
@@ -158,7 +158,12 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    protected function email()  //发送邮件
+     public function security()//安全中心页
+    {
+        return view('user.security');
+    }
+
+    protected function email()  //邮件发送
     {
         Session_Start();
         $code=rand(100000,999999);
@@ -170,7 +175,7 @@ class UserController extends Controller
         // return response()->json(['success']);
     }
 
-    public function is_idcard($id)  //验证身份证
+    public function is_idcard($id)  //身份证验证
     {      
         $id = strtoupper($id);
         $regx = "/(^\d{15}$)|(^\d{17}([0-9]|X)$)/";

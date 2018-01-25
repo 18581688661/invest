@@ -12,24 +12,24 @@
         <form method="POST" action="{{ route('user.store') }}">
           {{ csrf_field() }}
           <div class="form-group">
-            <label for="username">用户名：</label>
+            <label for="username" style="width: 80px;">用户名：</label>
             <input type="text" name="username" class="form-control" value="{{ old('username') }}" required>
           </div>
           <div class="form-group">
-            <label for="email">邮箱：</label>
+            <label for="email" style="width: 80px;">邮箱：</label>
             <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
             <input id="email_btn" class=" btn btn-info" type="button" value="发送邮箱验证码"/>
           </div>
           <div class="form-group">
-            <label for="verification_code">验证码：</label>
+            <label for="verification_code" style="width: 80px;">验证码：</label>
             <input type="text" name="verification_code" class="form-control" value="{{ old('verification_code') }}" required>
           </div>
           <div class="form-group">
-            <label for="password">密码：</label>
+            <label for="password" style="width: 80px;">密码：</label>
             <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
           </div>
           <div class="form-group">
-            <label for="password_confirmation">确认密码：</label>
+            <label for="password_confirmation" style="width: 80px;">确认密码：</label>
             <input type="password" name="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" required>
           </div>
           <button type="submit" class="btn btn-primary">注册</button>
@@ -63,7 +63,7 @@ window.onload = function ()
       this.disabled = "disabled";
       this.style.cursor = "wait";
       this.value = "重新发送 (" + sleep-- + ")";
-      toastr.success('添加成功！');
+      toastr.success('验证码发送成功！');
       interval = setInterval (function ()
       {
         if (sleep == 0)
