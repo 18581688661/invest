@@ -160,7 +160,95 @@ class UserController extends Controller
 
      public function security()//安全中心页
     {
-        return view('user.security');
+        $security=0;
+        $user=Auth::user()->get();
+        if($user->mobile)
+        {
+            $security+=1;
+        }
+        if($user->ID_card)
+        {
+            $security+=1;
+        }
+        if($user->contact)
+        {
+            $security+=1;
+        }
+        switch ($security) {
+            case '0':
+                $security_level='极低';
+                break;
+            case '1':
+                $security_level='低';
+                break;
+            case '2':
+                $security_level='中';
+                break;
+            default:
+                $security_level='高';
+        }
+        return view('user.security',['security_level'=>$security_level]);
+    }
+
+    public function mobile_binding(Request $request)
+    {
+        session_start();
+        $this->validate($request, [
+        'mobile' => 'required|digits:11',
+        'verification_code' =>'required|digits:6'
+        ]);
+        $user=Auth::user()->get();
+        if($request->verification_code==$_SESSION['verify_code'])
+        {
+            $user->mobile=$request->mobile;
+            $user->save();
+            Alert::success('恭喜你，手机号绑定成功！');
+            return redirect()->back();
+        }
+        else
+        {
+            Alert::error('验证码输入有误，请重新输入！');
+            return redirect()->back();
+        }
+    }
+
+    public function contact_binding(Request $request)
+    {
+        $this->validate($request, [
+        'contact' => 'required|digits:11',
+        ]);
+        $user=Auth::user()->get();
+        $user->contact=$request->contact;
+        $user->save();
+        Alert::success('恭喜你，联系人设置成功！');
+        return redirect()->back();
+    }
+
+    public function change_pwd(Request $request)
+    {
+        $this->validate($request,[
+            'old_password'=>'required|min:6',
+            'new_password'=>'required|confirmed|min:6'
+            ]);
+        $credentials=['username'=>Auth::user()->get()->username,'password'=>$request->old_password,];
+        if(Auth::user()->attempt($credentials))
+        {
+            $user=Auth::user()->get();
+            $user->password=bcrypt($request->new_password);
+            $user->save();
+            Alert::success('恭喜你，密码修改成功！');
+            return redirect()->back();
+        }
+        else
+        {
+            Alert::error('抱歉，原密码输入不正确，请重新输入！');
+            return redirect()->back();
+        }
+    }
+
+    public function recharge()//充值页面
+    {
+        return view('user.recharge');
     }
 
     protected function email()  //邮件发送
@@ -173,6 +261,32 @@ class UserController extends Controller
             $message ->to($to)->subject('【清风理财】验证码');
         });
         // return response()->json(['success']);
+    }
+
+    public function sms()
+    {
+        $statusStr = array(
+        "0" => "短信发送成功",
+        "-1" => "参数不全",
+        "-2" => "服务器空间不支持,请确认支持curl或者fsocket，联系您的空间商解决或者更换空间！",
+        "30" => "密码错误",
+        "40" => "账号不存在",
+        "41" => "余额不足",
+        "42" => "帐户已过期",
+        "43" => "IP地址限制",
+        "50" => "内容含有敏感词"
+         );  
+        $smsapi = "http://www.smsbao.com/"; //短信网关
+        $user = "weiwei2018"; //短信平台帐号
+        $pass = md5("w123456"); //短信平台密码
+        $code=rand(100000,999999);
+        Session_Start();
+        $_SESSION["verify_code"]=$code;
+        $content="【清风理财】验证码：".$code;//要发送的短信内容
+        $phone = $_GET["mobile"];
+        $sendurl = $smsapi."sms?u=".$user."&p=".$pass."&m=".$phone."&c=".urlencode($content);
+        $result =file_get_contents($sendurl) ;
+        // echo $statusStr[$result];
     }
 
     public function is_idcard($id)  //身份证验证

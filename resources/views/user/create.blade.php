@@ -55,15 +55,16 @@ window.onload = function ()
     if (!interval)
     {
       $.ajax({  
-           　 type: "get", //用POST方式传输     　　  
+           　 type: "get", //用GET方式传输     　　  
            　 url: "{{ route('email') }}", 
            data: {email:$("input[name='email']").val()},
+           success:toastr.success('验证码发送成功！'),
          }); 
       this.style.backgroundColor = 'rgb(243, 182, 182)';
       this.disabled = "disabled";
       this.style.cursor = "wait";
       this.value = "重新发送 (" + sleep-- + ")";
-      toastr.success('验证码发送成功！');
+      
       interval = setInterval (function ()
       {
         if (sleep == 0)

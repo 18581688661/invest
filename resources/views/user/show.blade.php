@@ -9,7 +9,7 @@
         <div class="collapse " id="collapse1">
             <ul class="nav">
                 <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">充值</a></li>
+                <li style="text-align: center"><a href="{{ route('recharge') }}" style="font-size: 16px">充值</a></li>
                 <li style="text-align: center"><a href="#" style="font-size: 16px">提现</a></li>
                 <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
             </ul>
@@ -40,8 +40,8 @@
 		<div class="container col-lg-12"style="margin-top: 10px">
 			<div class="container col-lg-10" style="font-size: 18px;margin-left: -29px;color:#666;line-height: 34px;">可用余额：¥{{Auth::user()->get()->balance}}</div>
             <div class="container col-lg-2 pull-right">
-                <button class="btn" style="background: #FFAC2A;"><a href="#" style="color: #FFFFFF;font-weight: 900">充值</a></button>
-                <button class="btn btn-success" style="margin-left: 2px"><a href="#" style="color: #FFFFFF;font-weight: 900">提现</a></button>
+                <a href="{{ route('recharge') }}"><button class="btn" style="background: #FFAC2A;color: #FFFFFF;font-weight: 900">充值</button></a>
+                <a href="#"><button class="btn btn-success" style="margin-left: 2px;color: #FFFFFF;font-weight: 900">提现</button></a>
             </div>
 		</div>
         <div class="col-lg-12">
