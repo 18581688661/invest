@@ -31,6 +31,9 @@ class CreateUserTable extends Migration
             $table->dateTime('this_login_time')->default(Carbon::now());
             $table->dateTime('risk_time')->nullable();
             $table->Integer('risk_score')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_address')->nullable();
+            $table->string('bank_card')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

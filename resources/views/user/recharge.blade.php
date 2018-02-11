@@ -9,8 +9,8 @@
     <div class="collapse in" id="collapse1">
       <ul class="nav">
         <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
-        <li style="text-align: center"><a href="#" style="font-size: 16px;color: #FFAC2A;font-weight: bold;">充值</a></li>
-        <li style="text-align: center"><a href="#" style="font-size: 16px">提现</a></li>
+        <li style="text-align: center"><a href="{{ route('recharge') }}" style="font-size: 16px;color: #FFAC2A;font-weight: bold;">充值</a></li>
+        <li style="text-align: center"><a href="{{ route('withdrawals') }}" style="font-size: 16px">提现</a></li>
         <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
       </ul>
     </div>
@@ -32,18 +32,22 @@
 </div>
 <div class="container col-lg-10">
   <h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp资金充值</h4>
+  @if(Auth::user()->get()->real_name)
   <div class="container col-lg-6" style="margin-top: 20px">
-                <form method="POST" action="{{ route('recharge') }}">
-                <!-- @include('shared.errors') -->
-                @include('shared.messages')
-                {{ csrf_field() }}
-                <div class="form-group">
-                    <label for="amount" style="width: 80px;">充值金额：</label>
-                    <input type="number" name="amount" min="1" max="100000" class="form-control" value="{{ old('amount') }}" required>
-                    <p style="font-size: 14px;color: #999;margin-top: 20px">请输入1-100,000之间的正整数</p>
-                </div>
-                <button type="submit" class="btn btn-success">提交</button>
-            </form>
-            </div>
+    <form method="POST" action="{{ route('recharge') }}">
+        <!-- @include('shared.errors') -->
+        @include('shared.messages')
+        {{ csrf_field() }}
+        <div class="form-group">
+            <label for="amount" style="width: 80px;">充值金额：</label>
+            <input type="number" name="amount" min="1" max="100000" class="form-control" value="{{ old('amount') }}" required>
+            <p style="font-size: 14px;color: #999;margin-top: 20px">请输入1-100,000之间的正整数</p>
+        </div>
+        <button type="submit" class="btn btn-success">充值</button>
+    </form>
+</div>
+@else
+<p style="color: #999;font-size: 18px;margin-top: 20px;">您尚未进行实名认证，请先进行<a href="{{ route('certification') }}">实名认证</a></p>
+@endif
 </div>
 @stop

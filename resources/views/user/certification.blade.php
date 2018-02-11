@@ -10,7 +10,7 @@
             <ul class="nav">
                 <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
                 <li style="text-align: center"><a href="#" style="font-size: 16px">充值</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">提现</a></li>
+                <li style="text-align: center"><a href="{{ route('withdrawals') }}" style="font-size: 16px">提现</a></li>
                 <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
             </ul>
         </div>

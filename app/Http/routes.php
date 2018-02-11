@@ -44,3 +44,8 @@ Route::post('contact_binding','UserController@contact_binding')->name('contact_b
 Route::post('change_pwd','UserController@change_pwd')->name('change_pwd');//修改密码
 
 Route::get('recharge','UserController@recharge')->name('recharge');//充值页面
+Route::get('withdrawals','UserController@withdrawals')->name('withdrawals');//提现页面
+Route::post('withdrawals1','UserController@withdrawals1')->name('withdrawals1');//提现操作
+Route::get('bank_manage','UserController@bank_manage')->name('bank_manage');//管理银行卡页面
+Route::post('bank_binding','UserController@bank_binding')->name('bank_binding');//添加银行卡
+Route::post('bank_unbinding','UserController@bank_unbinding')->name('bank_unbinding');//解绑银行卡

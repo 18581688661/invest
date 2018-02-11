@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Transaction_details;
 use Alert;
 use Mail;
 use Auth;
@@ -84,14 +85,14 @@ class UserController extends Controller
             Alert::info('该邮箱尚未注册,请重新输入！');
             return redirect()->back();
         }
-        
     }
 
     public function show()//个人中心
     {
         $id=Auth::user()->get()->id;
         $user = User::findOrFail($id);
-        return view('user.show', compact('user'));
+        $transaction_details=Transaction_details::where('user_id','=',$user->id)->orderBy('transaction_time', 'desc')->get();
+        return view('user.show',compact('transaction_details'));
     }
 
     public function message()//消息中心
@@ -249,6 +250,80 @@ class UserController extends Controller
     public function recharge()//充值页面
     {
         return view('user.recharge');
+    }
+
+    public function withdrawals()//提现页面
+    {
+        return view('user.withdrawals');
+    }
+
+    public function withdrawals1(Request $request)
+    {
+        session_start();
+        $this->validate($request, [
+            'amount' => 'required',
+            'verification_code' =>'required|digits:6'
+            ]);
+        $user=Auth::user()->get();
+        if($request->verification_code==$_SESSION["verify_code"])
+        {
+            if($request->amount<$user->balance)
+            {
+                $user->balance=$user->balance-$request->amount;
+                $user->save();
+                $transaction_detail=Transaction_details::create([
+                'user_id'=>$user->id,
+                'transaction_time'=>Carbon::now(),
+                'transaction_type'=>'提现冻结',
+                'amount'=>$request->amount,
+                'remarks'=>'冻结',
+                ]);
+                Alert::success('恭喜你，提现成功！');
+                return redirect()->back();
+            }
+            else
+            {
+                Alert::error('余额不足，请重新输入！');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            Alert::error('验证码输入有误，请重新输入！');
+            return redirect()->back();
+        }
+    }
+
+    public function bank_manage()//管理银行卡页面
+    {
+        return view('user.bank_manage');
+    }
+
+    public function bank_binding(Request $request)//添加银行卡
+    {
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'bank_address' => 'required',
+            'bank_card'=>'required'
+            ]);
+        $user=Auth::user()->get();
+        $user->bank_name=$request->bank_name;
+        $user->bank_address=$request->bank_address;
+        $user->bank_card=$request->bank_card;
+        $user->save();
+        Alert::success('恭喜你，银行卡绑定成功！');
+        return redirect()->back();
+    }
+
+    public function bank_unbinding()//解绑银行卡
+    {
+        $user=Auth::user()->get();
+        $user->bank_name=null;
+        $user->bank_address=null;
+        $user->bank_card=null;
+        $user->save();
+        Alert::success('恭喜你，银行卡解绑成功！');
+        return redirect()->back();
     }
 
     protected function email()  //邮件发送

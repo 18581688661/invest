@@ -10,7 +10,7 @@
             <ul class="nav">
                 <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
                 <li style="text-align: center"><a href="{{ route('recharge') }}" style="font-size: 16px">充值</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">提现</a></li>
+                <li style="text-align: center"><a href="{{ route('withdrawals') }}" style="font-size: 16px">提现</a></li>
                 <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
             </ul>
         </div>
@@ -31,9 +31,6 @@
 	</ul>
 </div>
 	<div class="container col-lg-10">
-        <button id="test">
-            测试
-        </button>
 		<h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp账户中心</h4>
 		<p style="font-size: 14px;color: #999;margin-top: 20px">欢迎您！@if(Auth::user()->get()->real_name){{Auth::user()->get()->real_name}}@else{{Auth::user()->get()->username}}@endif</p>
         <p style="font-size: 14px;color: #999;margin-top: 20px">上次登录时间：{{Auth::user()->get()->last_login_time}}</p>
@@ -41,7 +38,7 @@
 			<div class="container col-lg-10" style="font-size: 18px;margin-left: -29px;color:#666;line-height: 34px;">可用余额：¥{{Auth::user()->get()->balance}}</div>
             <div class="container col-lg-2 pull-right">
                 <a href="{{ route('recharge') }}"><button class="btn" style="background: #FFAC2A;color: #FFFFFF;font-weight: 900">充值</button></a>
-                <a href="#"><button class="btn btn-success" style="margin-left: 2px;color: #FFFFFF;font-weight: 900">提现</button></a>
+                <a href="{{ route('withdrawals') }}"><button class="btn btn-success" style="margin-left: 2px;color: #FFFFFF;font-weight: 900">提现</button></a>
             </div>
 		</div>
         <div class="col-lg-12">
@@ -70,6 +67,7 @@
                 <h4 style="border-left: 3px solid #FFAC2A;margin-left: -29px;float: left">&nbsp&nbsp我的交易明细</h4>
                 <h4><a href="#" style=";color:#FFAC2A;float: right">查看更多&nbsp></a></h4>
             </div>
+            @if (count($transaction_details))
         	<table class="table">
         		<tr>
         			<td class="text-center col-lg-3" style="vertical-align: middle;font-size: 18px;color: #666;">时间</td>
@@ -77,31 +75,16 @@
         			<td class="text-center col-lg-3" style="vertical-align: middle;font-size: 18px;color: #666;">金额</td>
         			<td class="text-center col-lg-3" style="vertical-align: middle;font-size: 18px;color: #666;">备注</td>
         		</tr>
+                @foreach ($transaction_details as $transaction_detail)
         		<tr>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">2017年12月17日17:57:01</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">支付宝充值</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥1000</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">备注</td>
+        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $transaction_detail->transaction_time }}</td>
+        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $transaction_detail->transaction_type }}</td>
+        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥{{ $transaction_detail->amount }}</td>
+        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $transaction_detail->remarks }}</td>
         		</tr>
-        		<tr>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">2017年12月17日17:45:11</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">微信充值</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥3000</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">备注</td>
-        		</tr>
-        		<tr>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">2017年12月17日17:34:54</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">网银充值</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥4400</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">备注</td>
-        		</tr>
-        		<tr>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">2017年12月17日17:21:23</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">支付宝充值</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥10</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">备注</td>
-        		</tr>
+        		@endforeach
         	</table>
+            @endif
         </div>
 	</div>
 @stop
@@ -119,5 +102,9 @@ window.onload = function ()
         });
 }
 }
+//
+        <button id="test">
+            测试
+        </button>
 </script>
 @stop
