@@ -21,6 +21,7 @@ Route::get('login', 'SessionsController@create')->name('login');//用户登录
 Route::post('login', 'SessionsController@store')->name('login');//用户登录
 resource('user', 'UserController');//用户CURD
 Route::get('/show','UserController@show')->name('show');//个人中心
+Route::get('/mana_show','ManagerController@mana_show')->name('mana_show');//管理中心
 
 Route::get('mana_login', 'SessionsController@mana_create')->name('mana_login');//管理员登录
 Route::post('mana_login', 'SessionsController@mana_store')->name('mana_login');//管理员登录
@@ -49,3 +50,5 @@ Route::post('withdrawals1','UserController@withdrawals1')->name('withdrawals1');
 Route::get('bank_manage','UserController@bank_manage')->name('bank_manage');//管理银行卡页面
 Route::post('bank_binding','UserController@bank_binding')->name('bank_binding');//添加银行卡
 Route::post('bank_unbinding','UserController@bank_unbinding')->name('bank_unbinding');//解绑银行卡
+
+Route::get('project_manage','ManagerController@project_manage')->name('project_manage');//投资项目管理页面

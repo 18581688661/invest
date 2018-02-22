@@ -1,0 +1,49 @@
+@extends('layouts.default')
+@section('title', '管理员登录')
+@section('content')
+<div class="container">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h5>管理员登录<a class="btn btn-sm btn-success" href="{{ route('login') }}" role="button">用户登录</a>
+        </h5>
+      </div>
+      <div class="panel-body">
+        @include('shared.errors')
+
+        <form method="POST" action="{{ route('mana_login') }}">
+          {{ csrf_field() }}
+
+          <div class="form-group">
+            <label for="username" style="width: 80px;">用户名：</label>
+            <input type="text" name="username" class="form-control" value="{{ old('username') }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password" style="width: 80px;">密码：</label>
+            <input type="password" name="password" class="form-control" value="{{ old('password') }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="captcha" style="width: 80px;">验证码：</label>
+            <input type="text" name="captcha" class="form-control" value="{{ old('captcha') }}" required>
+          </div>
+
+          <div class="form-group">
+            <img src="{{captcha_src('flat')}}">
+          </div>
+
+          <div class="checkbox form-group">
+            <label><input type="checkbox" name="remember">记住我</label>
+          </div>
+
+           <button type="submit" class="btn btn-primary">登录</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <img src="/images/invest.jpg" height="420" width="620" />
+  </div>
+</div>
+@stop

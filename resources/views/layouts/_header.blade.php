@@ -4,8 +4,10 @@
                     <a href="/" class="navbar-brand">清风理财</a>
                 </div>
                 <ul class="nav navbar-nav navbar-left">
+                    @if (!Auth::manager()->check())
                     <li><a href="#">项目列表</a></li>
                     <li><a href="#">平台公告</a></li>
+                    @endif
                 </ul>
                 @if (Auth::user()->check())
                 <div class="container">
@@ -36,11 +38,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a class="dropdown-toggle" data-toggle="dropdown">
-                                {{ Auth::manager()->get()->mana_name }}
+                                {{ Auth::manager()->get()->username }}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('user.show') }}">个人中心</a></li>
+                                <li><a href="{{ route('mana_show') }}">管理中心</a></li>
                                 <li class="divider"></li>
                                 <li>
                                     <a id="logout" href="#">

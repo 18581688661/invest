@@ -79,7 +79,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="mobile" style="width: 80px;">手机号：</label>
-                <input type="text" class="form-control" name="mobile" placeholder="请输入手机号" required>
+                <input type="tel" class="form-control" name="mobile" placeholder="请输入手机号" required>
                 <input id="sms_btn" class="btn btn-info" type="button" value="发送手机验证码"/>
             </div>
             <div class="form-group">
@@ -102,7 +102,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="contact" style="width: 120px;">联系人手机号：</label>
-                <input type="text" class="form-control" name="contact" placeholder="请输入联系人手机号" required>
+                <input type="tel" class="form-control" name="contact" placeholder="请输入联系人手机号" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success form-control">提交</button>
@@ -120,7 +120,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="contact" style="width: 120px;">联系人手机号：</label>
-                <input type="text" class="form-control" name="contact" placeholder="请输入联系人手机号" required>
+                <input type="tel" class="form-control" name="contact" placeholder="请输入联系人手机号" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success form-control">提交</button>
