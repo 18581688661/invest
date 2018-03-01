@@ -17,7 +17,7 @@
     <div class="md-content">
       <h3>新增投资项目</h3>
       <div>
-        <form action="{{ route('mobile_binding') }}" method="POST" class="form-horizontal">
+        <form action="{{ route('project_add') }}" method="POST" class="form-horizontal">
           @include('shared.messages')
             {{ csrf_field() }}
             <div class="form-group">

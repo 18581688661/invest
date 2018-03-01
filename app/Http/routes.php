@@ -52,3 +52,4 @@ Route::post('bank_binding','UserController@bank_binding')->name('bank_binding');
 Route::post('bank_unbinding','UserController@bank_unbinding')->name('bank_unbinding');//解绑银行卡
 
 Route::get('project_manage','ManagerController@project_manage')->name('project_manage');//投资项目管理页面
+Route::post('project_add','ManagerController@project_add')->name('project_add');//投资项目新增
