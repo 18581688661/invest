@@ -32,6 +32,10 @@
             <label for="password_confirmation" style="width: 80px;">确认密码：</label>
             <input type="password" name="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" required>
           </div>
+          <div class="form-group">
+            <label for="capital_password" style="width: 80px;">资金密码：</label>
+            <input type="password" name="capital_password" class="form-control" value="{{ old('capital_password') }}" required>
+          </div>
           <button type="submit" class="btn btn-primary">注册</button>
         </form>
         <hr>

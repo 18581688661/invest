@@ -35,6 +35,7 @@ class CreateUserTable extends Migration
             $table->string('bank_name')->nullable();
             $table->string('bank_address')->nullable();
             $table->string('bank_card')->nullable();
+            $table->string('capital_password');
             $table->rememberToken();
             $table->timestamps();
         });

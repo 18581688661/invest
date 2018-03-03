@@ -9,6 +9,7 @@ use Carbon\Carbon;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Website_info;
 use Alert;
 
 class StaticPagesController extends Controller
@@ -21,13 +22,28 @@ class StaticPagesController extends Controller
     public function index()
     {
          // Alert::success('恭喜你，成功投资50000元！')->persistent('关闭');//手动关闭
-        $projects=Project::orderBy('project_start_time', 'desc')->get();
         $signup_num=count(User::all());
         $today_signup_num=count(User::whereBetween('signup_time',array(Carbon::today(),Carbon::tomorrow()))->get());
         $startdate=strtotime(Carbon::parse('2018-01-01 00:00:00'));
         $enddate=strtotime(Carbon::now());
-        $work_days=round(($enddate-$startdate)/3600/24) ; 
-        return view('static_pages/index',compact('projects','signup_num','today_signup_num','work_days'));
+        $work_days=round(($enddate-$startdate)/3600/24); 
+        $website_info=Website_info::findOrFail(1);
+        $projects=Project::all();
+        foreach($projects as $project) {
+            if(Carbon::now()->gte(Carbon::parse($project->project_start_time)) && $project->project_state==0)
+            {
+                $project->project_state=1;
+                $project->save();
+            }
+            if(Carbon::now()->gte(Carbon::parse($project->project_stop_time)) && $project->project_state==2)
+            {
+                $project->project_state=3;
+                $project->save();
+            }
+
+        }
+        $projects=Project::orderBy('project_start_time', 'desc')->get();
+        return view('static_pages/index',compact('website_info','projects','signup_num','today_signup_num','work_days'));
     }
 
     /**

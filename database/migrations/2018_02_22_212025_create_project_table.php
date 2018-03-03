@@ -25,6 +25,7 @@ class CreateProjectTable extends Migration
             $table->Integer('amount_wait');
             $table->dateTime('project_start_time');
             $table->dateTime('project_stop_time');
+            $table->Integer('invest_user_amount');
             $table->timestamps();
         });
     }

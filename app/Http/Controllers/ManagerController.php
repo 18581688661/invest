@@ -26,7 +26,22 @@ class ManagerController extends Controller
 
     public function project_manage()
     {
-    	return view('manager.project_manage');
+        $projects=Project::all();
+        foreach($projects as $project) {
+            if(Carbon::now()->gte(Carbon::parse($project->project_start_time)) && $project->project_state==0)
+            {
+                $project->project_state=1;
+                $project->save();
+            }
+            if(Carbon::now()->gte(Carbon::parse($project->project_stop_time)) && $project->project_state==2)
+            {
+                $project->project_state=3;
+                $project->save();
+            }
+
+        }
+        $projects=Project::orderBy('project_start_time', 'desc')->get();
+    	return view('manager.project_manage',compact('projects'));
     }
 
     public function project_add(Request $request)

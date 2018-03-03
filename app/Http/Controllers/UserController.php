@@ -28,6 +28,7 @@ class UserController extends Controller
         $this->validate($request, [
         'username' => 'required|max:50|unique:user',
         'password' => 'required|confirmed|min:6',
+        'capital_password' => 'required|digits:6',
         'email'    => 'required|email',//测试完改回唯一
         'verification_code' =>'required|digits:6'
         ]);
@@ -35,6 +36,7 @@ class UserController extends Controller
             $user=User::create([
                 'username'=>$request->username,
                 'password'=>bcrypt($request->password),
+                'capital_password'=>$request->capital_password,
                 'email'=>$request->email,
                 ]);
             // session()->flash('success', '恭喜你，注册成功！');
@@ -333,7 +335,7 @@ class UserController extends Controller
         $_SESSION["verify_code"]=$code;
         Mail::send('email.signup',['code'=>$code],function($message){
             $to = $_GET["email"];
-            $message ->to($to)->subject('【清风理财】验证码');
+            $message ->to($to)->subject('项目测试');
         });
         // return response()->json(['success']);
     }

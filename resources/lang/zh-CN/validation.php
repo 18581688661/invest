@@ -151,6 +151,7 @@ return [
         'real_name'             =>'真实姓名',
         'ID_card'               =>'身份证',
         'captcha'               =>'验证码',
+        'capital_password'      =>'资金密码',
     ],
 
 ];

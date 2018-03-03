@@ -53,3 +53,5 @@ Route::post('bank_unbinding','UserController@bank_unbinding')->name('bank_unbind
 
 Route::get('project_manage','ManagerController@project_manage')->name('project_manage');//投资项目管理页面
 Route::post('project_add','ManagerController@project_add')->name('project_add');//投资项目新增
+
+Route::post('invest','InvestController@invest')->name('invest');//项目投资
