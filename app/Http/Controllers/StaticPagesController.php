@@ -9,7 +9,9 @@ use Carbon\Carbon;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Invest;
 use App\Models\Website_info;
+use App\Models\Transaction_details;
 use Alert;
 
 class StaticPagesController extends Controller
@@ -39,11 +41,43 @@ class StaticPagesController extends Controller
             {
                 $project->project_state=3;
                 $project->save();
+                $invests=Invest::where('project_id',$project->id)->get();
+                foreach($invests as $invest)
+                {
+                    $invest->invest_state = 1;
+                    $user=User::findOrFail($invest->user_id);
+                    $user->balance += $invest->profit;
+                    $user->balance += $invest->invest_amount;
+                    $user->profit += $invest->profit;
+                    $invest->save();
+                    $user->save();
+                    $project=Project::findOrFail($invest->project_id);
+                    $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'项目回款(本金)',
+                        'amount'=>$invest->invest_amount,
+                        'remarks'=>'项目回款-'.$project->project_name,
+                        ]);
+                    $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'项目回款(收益)',
+                        'amount'=>$invest->profit,
+                        'remarks'=>'项目回款-'.$project->project_name,
+                        ]);
+                }
             }
 
         }
         $projects=Project::orderBy('project_start_time', 'desc')->get();
-        return view('static_pages/index',compact('website_info','projects','signup_num','today_signup_num','work_days'));
+        $invests=Invest::whereBetween('invest_start_time',array(Carbon::today(),Carbon::tomorrow()))->get();
+        $today_invest=0;
+        foreach($invests as $invest)
+        {
+           $today_invest += $invest->invest_amount;
+        }
+        return view('static_pages/index',compact('today_invest','website_info','projects','signup_num','today_signup_num','work_days'));
     }
 
     /**

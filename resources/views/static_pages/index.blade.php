@@ -134,6 +134,9 @@
                     <div>最大可投金额：¥{{ $project->amount_wait }}</div>
                 </div>
                 <div class="form-group">
+                    <div>可用余额：¥{{ Auth::user()->get()->balance }}</div>
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-success form-control">确定</button>
                     <button type="button" style="float: right" class="md-close btn btn-primary">关闭</button>
                 </div>
@@ -189,7 +192,7 @@
             <h3 class="panel-title" style="font-size: 20px;text-align: center">平台数据</h3>
         </div>
         <div style="background: #F7F7F9;height: 100%">
-            <p style="text-align: center;font-size: 20px;color: #777;">平台已成功运行</p>
+            <p style="text-align: center;font-size: 20px;color: #777;">平台运营天数</p>
             <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">{{$work_days}}天</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台总注册人数</p>
             <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">{{$signup_num}}人</p>
@@ -198,7 +201,7 @@
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台累计投资金额</p>
             <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $website_info->total_investment }}</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台今日投资金额</p>
-            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $today_invest }}</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">累计为投资人赚取收益</p>
             <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $website_info->user_profit }}</p>
         </div>

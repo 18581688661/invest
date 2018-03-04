@@ -28,7 +28,7 @@ class Invest extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'project_id', 'project_name','invest_amount','invest_start_time','project_stop_time','profit','invest_state'];
+    protected $fillable = ['user_id', 'project_id', 'project_name','invest_amount','invest_start_time','project_stop_time','profit','invest_state','remarks'];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -23,7 +23,7 @@ class CreateUserTable extends Migration
             $table->string('ID_card')->nullable()->unique();
             $table->string('mobile')->nullable()->unique();
             $table->string('contact')->nullable();
-            $table->float('balance')->default(0);
+            $table->float('balance',8)->default(0);
             $table->float('profit')->default(0);
             $table->string('image_url')->nullable()->unique();
             $table->dateTime('certification_time')->nullable();

@@ -61,7 +61,7 @@ class ManagerController extends Controller
                 'project_start_time'=>$request->project_start_time,
                 'project_time'=>$request->project_time,
                 'project_intro'=>$request->project_intro,
-                'project_state'=>0,
+                'project_state'=>0,//0：未开始，1：投资中，2：回款中，3：已回款
                 'amount_invested'=>0,
                 'amount_wait'=>$request->project_amount,
                 'project_stop_time'=>Carbon::parse($request->project_start_time)->addDays($request->project_time),

@@ -93,7 +93,7 @@ class UserController extends Controller
     {
         $id=Auth::user()->get()->id;
         $user = User::findOrFail($id);
-        $transaction_details=Transaction_details::where('user_id','=',$user->id)->orderBy('transaction_time', 'desc')->get();
+        $transaction_details=Transaction_details::where('user_id','=',$user->id)->orderBy('transaction_time', 'desc')->take(8)->get();
         return view('user.show',compact('transaction_details'));
     }
 

@@ -22,6 +22,7 @@ class CreateInvestTable extends Migration
             $table->dateTime('project_stop_time');
             $table->float('profit');
             $table->Integer('invest_state');
+            $table->string('remarks');
             $table->timestamps();
         });
     }
