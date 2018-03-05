@@ -37,6 +37,32 @@ class ManagerController extends Controller
             {
                 $project->project_state=3;
                 $project->save();
+                $invests=Invest::where('project_id',$project->id)->where('invest_state',0)->get();
+                foreach($invests as $invest)
+                {
+                    $invest->invest_state = 1;
+                    $user=User::findOrFail($invest->user_id);
+                    $user->balance += $invest->profit;
+                    $user->balance += $invest->invest_amount;
+                    $user->profit += $invest->profit;
+                    $invest->save();
+                    $user->save();
+                    $project=Project::findOrFail($invest->project_id);
+                    $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'项目回款(本金)',
+                        'amount'=>$invest->invest_amount,
+                        'remarks'=>'项目回款-'.$project->project_name,
+                        ]);
+                    $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'项目回款(收益)',
+                        'amount'=>$invest->profit,
+                        'remarks'=>'项目回款-'.$project->project_name,
+                        ]);
+                }
             }
 
         }

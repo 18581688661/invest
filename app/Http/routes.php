@@ -46,6 +46,7 @@ Route::post('change_pwd','UserController@change_pwd')->name('change_pwd');//修�
 
 Route::get('recharge','UserController@recharge')->name('recharge');//充值页面
 Route::get('withdrawals','UserController@withdrawals')->name('withdrawals');//提现页面
+Route::get('transaction_record','UserController@transaction_record')->name('transaction_record');//交易记录页面
 Route::post('withdrawals1','UserController@withdrawals1')->name('withdrawals1');//提现操作
 Route::get('bank_manage','UserController@bank_manage')->name('bank_manage');//管理银行卡页面
 Route::post('bank_binding','UserController@bank_binding')->name('bank_binding');//添加银行卡
@@ -55,3 +56,11 @@ Route::get('project_manage','ManagerController@project_manage')->name('project_m
 Route::post('project_add','ManagerController@project_add')->name('project_add');//投资项目新增
 
 Route::post('invest','InvestController@invest')->name('invest');//项目投资
+Route::get('project_invested','InvestController@project_invested')->name('project_invested');//所有已投项目
+Route::get('project_backing','InvestController@project_backing')->name('project_backing');//回款中项目
+Route::get('project_backed','InvestController@project_backed')->name('project_backed');//已回款项目
+Route::get('project_transferring','InvestController@project_transferring')->name('project_transferring');//转让中项目
+Route::get('project_transferred','InvestController@project_transferred')->name('project_transferred');//已转让项目
+
+Route::get('transferring','InvestController@transferring')->name('transferring');//转让列表
+Route::post('transfer','InvestController@transfer')->name('transfer');//转让操作

@@ -39,8 +39,11 @@ class InvestController extends Controller
                         'invest_amount'=>$request->invest_amount,
                         'invest_start_time'=>Carbon::now(),
                         'project_stop_time'=>$project->project_stop_time,
-                        'profit'=>(($request->invest_amount*$project->rate)/36500)*$project->project_time,
-                        'invest_state'=>0,//0：回款中，1：已回款，2：已转让
+                        $startdate=strtotime(Carbon::parse($invest->invest_start_time)),
+                        $enddate=strtotime(Carbon::parse($invest->project_stop_time)),
+                        $yuqi_time=round(($enddate-$startdate)/3600/24), //预期投资天数
+                        'profit'=>(($request->invest_amount*$project->rate)/36500)*$yuqi_time,
+                        'invest_state'=>0,//0：回款中，1：已回款，2：转让中，3：已转让
                         'remarks'=>'主动投资',
                         ]);
                     $project->amount_invested += $request->invest_amount;
@@ -53,7 +56,10 @@ class InvestController extends Controller
                     $project->save();
                     $website_info=Website_info::findOrFail(1);
                     $website_info->total_investment += $request->invest_amount;
-                    $website_info->user_profit += (($request->invest_amount*$project->rate)/36500)*$project->project_time;
+                    $startdate=strtotime(Carbon::parse($invest->invest_start_time));
+                    $enddate=strtotime(Carbon::parse($invest->project_stop_time));
+                    $yuqi_time=round(($enddate-$startdate)/3600/24); //预期投资天数
+                    $website_info->user_profit += (($request->invest_amount*$project->rate)/36500)*$yuqi_time;
                     $website_info->save();
                     $transaction_detail=Transaction_details::create([
                         'user_id'=>$user->id,
@@ -82,4 +88,64 @@ class InvestController extends Controller
         }
     }
 
+    public function transferring()
+    {
+        return view('static_pages/transferring');
+    }
+
+    public function project_invested()
+    {
+        $invests=Invest::where('user_id',Auth::user()->get()->id)->orderBy('invest_start_time', 'desc')->paginate(10);
+        return view('user/project_invested',compact('invests'));
+    }
+
+    public function project_backing()
+    {
+        $invests=Invest::where('user_id',Auth::user()->get()->id)->where('invest_state',0)->orderBy('invest_start_time', 'desc')->paginate(10);
+        return view('user/project_backing',compact('invests'));
+    }
+
+    public function project_backed()
+    {
+        $invests=Invest::where('user_id',Auth::user()->get()->id)->where('invest_state',1)->orderBy('invest_start_time', 'desc')->paginate(10);
+        return view('user/project_backed',compact('invests'));
+    }
+
+    public function project_transferring()
+    {
+        $invests=Invest::where('user_id',Auth::user()->get()->id)->where('invest_state',2)->orderBy('invest_start_time', 'desc')->paginate(10);
+        return view('user/project_transferring',compact('invests'));
+    }
+
+    public function project_transferred()
+    {
+        $invests=Invest::where('user_id',Auth::user()->get()->id)->where('invest_state',3)->orderBy('invest_start_time', 'desc')->paginate(10);
+        return view('user/project_transferred',compact('invests'));
+    }
+
+    public function transfer(Request $request)
+    {
+        if ($request->capital_password == Auth::user()->get()->capital_password) {
+            $invest=Invest::findOrFail($request->invest_id);
+            $invest->invest_state = 2;
+
+            $startdate=strtotime(Carbon::parse($invest->invest_start_time));
+            $enddate=strtotime(Carbon::now());
+            $shiji_time=round(($enddate-$startdate)/3600/24); //实际投资天数
+
+            $startdate1=strtotime(Carbon::parse($invest->invest_start_time));
+            $enddate1=strtotime(Carbon::parse($invest->project_stop_time));
+            $yuqi_time=round(($enddate1-$startdate1)/3600/24); //完整投资天数
+
+            $invest->profit = (($invest->profit*$shiji_time)/$yuqi_time);
+            $invest->save();
+            Alert::success('发布转让信息成功,请耐心等待转让完成！本项目实际获得收益：¥'.$invest->profit)->persistent('Close');
+            return redirect()->back();
+        }
+        else
+        {
+            Alert::error('资金密码输入有误，请重新输入！');
+            return redirect()->back();
+        }
+    }
 }

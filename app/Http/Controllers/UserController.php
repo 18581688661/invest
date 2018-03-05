@@ -280,7 +280,7 @@ class UserController extends Controller
                 'amount'=>$request->amount,
                 'remarks'=>'冻结',
                 ]);
-                Alert::success('恭喜你，提现成功！');
+                Alert::success('恭喜你，提现申请成功！');
                 return redirect()->back();
             }
             else
@@ -326,6 +326,12 @@ class UserController extends Controller
         $user->save();
         Alert::success('恭喜你，银行卡解绑成功！');
         return redirect()->back();
+    }
+
+    public function transaction_record()
+    {
+        $transaction_details=Transaction_details::where('user_id',Auth::user()->get()->id)->orderBy('transaction_time', 'desc')->paginate(10);
+        return view('user/transaction_record',compact('transaction_details'));
     }
 
     protected function email()  //邮件发送

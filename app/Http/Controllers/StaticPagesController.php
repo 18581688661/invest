@@ -41,7 +41,7 @@ class StaticPagesController extends Controller
             {
                 $project->project_state=3;
                 $project->save();
-                $invests=Invest::where('project_id',$project->id)->get();
+                $invests=Invest::where('project_id',$project->id)->where('invest_state',0)->get();
                 foreach($invests as $invest)
                 {
                     $invest->invest_state = 1;
