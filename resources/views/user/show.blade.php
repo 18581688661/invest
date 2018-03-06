@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-3" style="float: left;background: #F7F7F9">
                 <p style="font-size: 18px;color: #666;text-align: center;margin-top: 24px">累计收益</p>
-                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 12px">¥{{Auth::user()->get()->balance}}</p>
+                <p style="font-size: 18px;color: #666;text-align: center;margin-top: 12px">¥{{Auth::user()->get()->profit}}</p>
             </div>
         </div>
         <div class="container col-lg-12" style="margin-top: 20px;background: #F7F7F9">
@@ -84,6 +84,8 @@
         		</tr>
         		@endforeach
         	</table>
+            @else
+            <p>暂无交易明细！</p>
             @endif
         </div>
 	</div>

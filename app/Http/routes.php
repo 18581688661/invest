@@ -64,3 +64,4 @@ Route::get('project_transferred','InvestController@project_transferred')->name('
 
 Route::get('transferring','InvestController@transferring')->name('transferring');//转让列表
 Route::post('transfer','InvestController@transfer')->name('transfer');//转让操作
+Route::post('buy_transfer','InvestController@buy_transfer')->name('buy_transfer');//购买转让

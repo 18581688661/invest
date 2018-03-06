@@ -8,10 +8,10 @@
 		<li style="text-align: center"><a href="#collapse1" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp资金管理</a></li>
         <div class="collapse " id="collapse1">
             <ul class="nav">
-                <li style="text-align: center"><a href="#" style="font-size: 16px">交易记录</a></li>
+                <li style="text-align: center"><a href="{{ route('transaction_record') }}" style="font-size: 16px">交易记录</a></li>
                 <li style="text-align: center"><a href="{{ route('recharge') }}" style="font-size: 16px">充值</a></li>
                 <li style="text-align: center"><a href="{{ route('withdrawals') }}" style="font-size: 16px">提现</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
+                <li style="text-align: center"><a href="{{ route('bank_manage') }}" style="font-size: 16px">银行卡</a></li>
             </ul>
         </div>
 		<li style="text-align: center"><a href="#collapse2" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp投资管理</a></li>
@@ -40,6 +40,7 @@
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">投资金额</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">投资时间</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">项目结束时间</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">转让时间</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">预期收益</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">状态</td>
         		</tr>
@@ -49,6 +50,7 @@
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->invest_amount }}</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->invest_start_time }}</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->project_stop_time }}</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($invest->transfer_time){{ $invest->transfer_time }}@else此项目未转让@endif</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->profit }}</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($invest->invest_state == 0)回款中@elseif($invest->invest_state == 1)已回款@elseif($invest->invest_state == 2)转让中@else已转让@endif</td>
         		</tr>

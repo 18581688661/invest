@@ -182,7 +182,7 @@
 @endforeach
 <div class="md-overlay"></div>
 @else
-暂无项目数据！
+<p style="font-size: 20px;" class="text-center">暂无项目数据！</p>
 @endif
 </div>
 

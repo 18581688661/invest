@@ -20,6 +20,8 @@ class CreateInvestTable extends Migration
             $table->Integer('invest_amount');
             $table->dateTime('invest_start_time');
             $table->dateTime('project_stop_time');
+            $table->dateTime('transfer_time')->nullable();
+            $table->dateTime('transfer_success_time')->nullable();
             $table->float('profit');
             $table->Integer('invest_state');
             $table->string('remarks');

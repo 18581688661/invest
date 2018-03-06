@@ -39,8 +39,8 @@ class InvestController extends Controller
                         'invest_amount'=>$request->invest_amount,
                         'invest_start_time'=>Carbon::now(),
                         'project_stop_time'=>$project->project_stop_time,
-                        $startdate=strtotime(Carbon::parse($invest->invest_start_time)),
-                        $enddate=strtotime(Carbon::parse($invest->project_stop_time)),
+                        $startdate=strtotime(Carbon::now()),
+                        $enddate=strtotime(Carbon::parse($project->project_stop_time)),
                         $yuqi_time=round(($enddate-$startdate)/3600/24), //预期投资天数
                         'profit'=>(($request->invest_amount*$project->rate)/36500)*$yuqi_time,
                         'invest_state'=>0,//0：回款中，1：已回款，2：转让中，3：已转让
@@ -90,7 +90,8 @@ class InvestController extends Controller
 
     public function transferring()
     {
-        return view('static_pages/transferring');
+        $invests=Invest::where('invest_state',2)->orderBy('transfer_time', 'desc')->paginate(10);
+        return view('user/transferring',compact('invests'));
     }
 
     public function project_invested()
@@ -138,6 +139,7 @@ class InvestController extends Controller
             $yuqi_time=round(($enddate1-$startdate1)/3600/24); //完整投资天数
 
             $invest->profit = (($invest->profit*$shiji_time)/$yuqi_time);
+            $invest->transfer_time=Carbon::now();
             $invest->save();
             Alert::success('发布转让信息成功,请耐心等待转让完成！本项目实际获得收益：¥'.$invest->profit)->persistent('Close');
             return redirect()->back();

@@ -36,4 +36,10 @@ class Invest extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function get_project($project_id)
+    {
+        $project=Project::findOrFail($project_id);
+        return $project;
+    }
 }

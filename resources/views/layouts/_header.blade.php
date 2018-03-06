@@ -5,7 +5,6 @@
                 </div>
                 <ul class="nav navbar-nav navbar-left">
                     @if (!Auth::manager()->check())
-                    <li><a href="{{ route('transferring') }}">转让列表</a></li>
                     <li><a href="#">平台公告</a></li>
                     @endif
                 </ul>

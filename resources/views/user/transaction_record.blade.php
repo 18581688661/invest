@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title','个人中心')
+@section('title','交易记录')
 @section('content')
 <div class="container col-lg-2" style="border-right: 1px dashed">
 	<ul class="nav nav-pills nav-stacked">
@@ -8,21 +8,21 @@
 		<li style="text-align: center"><a href="#collapse1" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp资金管理</a></li>
         <div class="collapse in" id="collapse1">
             <ul class="nav">
-                <li style="text-align: center"><a href="#" style="font-size: 16px;color: #FFAC2A;font-weight: bold;">交易记录</a></li>
+                <li style="text-align: center"><a href="{{ route('transaction_record') }}" style="font-size: 16px;color: #FFAC2A;font-weight: bold;">交易记录</a></li>
                 <li style="text-align: center"><a href="{{ route('recharge') }}" style="font-size: 16px">充值</a></li>
                 <li style="text-align: center"><a href="{{ route('withdrawals') }}" style="font-size: 16px">提现</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">银行卡</a></li>
+                <li style="text-align: center"><a href="{{ route('bank_manage') }}" style="font-size: 16px">银行卡</a></li>
             </ul>
         </div>
 		<li style="text-align: center"><a href="#collapse2" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp投资管理</a></li>
         <div class="collapse " id="collapse2">
             <ul class="nav">
-                <li style="text-align: center"><a href="#" style="font-size: 16px">所有已投项目</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">回款中项目</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">已回款项目</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">转让中项目</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">已转让项目</a></li>
-                <li style="text-align: center"><a href="#" style="font-size: 16px">零活宝</a></li>
+                <li style="text-align: center"><a href="{{ route('project_invested') }}" style="font-size: 16px">所有已投项目</a></li>
+                <li style="text-align: center"><a href="{{ route('project_backing') }}" style="font-size: 16px">回款中项目</a></li>
+                <li style="text-align: center"><a href="{{ route('project_backed') }}" style="font-size: 16px">已回款项目</a></li>
+                <li style="text-align: center"><a href="{{ route('project_transferring') }}" style="font-size: 16px">转让中项目</a></li>
+                <li style="text-align: center"><a href="{{ route('project_transferred') }}" style="font-size: 16px">已转让项目</a></li>
+                <li style="text-align: center"><a href="{{ route('transferring') }}" style="font-size: 16px">转让中心</a></li>
             </ul>
         </div>
 		<li style="text-align: center"><a href="{{ route('certification') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp实名认证</a></li>
