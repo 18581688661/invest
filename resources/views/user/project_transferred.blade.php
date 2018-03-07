@@ -41,15 +41,17 @@
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">投资时间</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">转让成功时间</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">预期收益</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">备注</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">状态</td>
         		</tr>
                 @foreach ($invests as $invest)
         		<tr>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->project_name }}</td>
-                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->invest_amount }}</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥{{ $invest->invest_amount }}</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->invest_start_time }}</td>
-                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->invest_success_time }}</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->profit }}</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->transfer_success_time }}</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥{{ $invest->profit }}</td>
+        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $invest->remarks }}</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($invest->invest_state == 0)回款中@elseif($invest->invest_state == 1)已回款@elseif($invest->invest_state == 2)转让中@else已转让@endif</td>
         		</tr>
         		@endforeach

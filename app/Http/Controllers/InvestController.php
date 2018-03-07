@@ -150,4 +150,76 @@ class InvestController extends Controller
             return redirect()->back();
         }
     }
+
+    public function buy_transfer(Request $request)
+    {
+        if ($request->capital_password == Auth::user()->get()->capital_password) {
+            $invest=Invest::findOrFail($request->invest_id);
+            $project=Project::findOrFail($invest->project_id);
+
+            $user=Auth::user()->get();
+            $user1=User::findOrFail($invest->user_id);
+            if($invest->invest_amount <= $user->balance)
+            {
+                //转让人相关操作
+                $invest->transfer_success_time=Carbon::now();
+                $invest->invest_state=3;
+                $invest->save();
+                $user1->balance += $invest->invest_amount;
+                $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user1->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'项目转让(本金)',
+                        'amount'=>$invest->invest_amount,
+                        'remarks'=>'项目转让成功-'.$project->project_name,
+                        ]);
+                $user1->balance += $invest->profit;
+                $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user1->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'项目转让(收益)',
+                        'amount'=>$invest->profit,
+                        'remarks'=>'项目转让成功-'.$project->project_name,
+                        ]);
+                $user1->save();
+
+                //购买人相关操作
+                $invest1=Invest::create([
+                    'user_id'=>$user->id,
+                    'project_id'=>$project->id,
+                    'project_name'=>$project->project_name,
+                    'invest_amount'=>$invest->invest_amount,
+                    'invest_start_time'=>Carbon::now(),
+                    'project_stop_time'=>$project->project_stop_time,
+                    $startdate=strtotime(Carbon::now()),
+                    $enddate=strtotime(Carbon::parse($project->project_stop_time)),
+                        $yuqi_time=round(($enddate-$startdate)/3600/24), //预期投资天数
+                        'profit'=>(($invest->invest_amount*$project->rate)/36500)*$yuqi_time,
+                        'invest_state'=>0,//0：回款中，1：已回款，2：转让中，3：已转让
+                        'remarks'=>'购买转让',
+                        ]);
+                $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'购买转让',
+                        'amount'=>$invest->invest_amount,
+                        'remarks'=>'购买转让-'.$project->project_name,
+                        ]);
+                $user->balance -= $invest->invest_amount;
+                $user->save();
+                    Alert::success('恭喜你，转让购买成功！');
+                    return redirect()->back();
+                }
+                else
+                {
+                    Alert::info('对不起，余额不足！');
+                    return redirect()->back();
+                }
+        }
+        else
+        {
+            Alert::error('资金密码输入有误，请重新输入！');
+            return redirect()->back();
+        }
+    }
 }
