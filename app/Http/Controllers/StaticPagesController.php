@@ -68,7 +68,6 @@ class StaticPagesController extends Controller
                         ]);
                 }
             }
-
         }
         $projects=Project::orderBy('project_start_time', 'desc')->get();
         $invests=Invest::whereBetween('invest_start_time',array(Carbon::today(),Carbon::tomorrow()))->get();

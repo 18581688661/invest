@@ -52,6 +52,31 @@
             <button type="submit" class="btn btn-success">提现</button>
         </form>
     </div>
+    <div class="col-lg-12">
+      <h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp提现记录</h4>
+      @if (count($withdrawals))
+          <table class="table">
+            <tr>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">提现金额</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">申请提现时间</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">处理时间</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">状态</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">备注</td>
+            </tr>
+                @foreach ($withdrawals as $withdrawal)
+            <tr>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥{{ $withdrawal->withdrawals_amount }}</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $withdrawal->withdrawals_time }}</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($withdrawal->handle_time){{ $withdrawal->handle_time }}@else未处理@endif</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($withdrawal->state == 0)待处理@elseif($withdrawal->state == 1)提现成功@else提现失败@endif</td>
+              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $withdrawal->remarks }}</td>
+            </tr>
+            @endforeach
+          </table>
+            @else
+            <p>暂无提现记录！</p>
+            @endif
+    </div>
     @else
     <p style="color: #999;font-size: 18px;margin-top: 20px;">您尚未添加提现银行卡信息，请先<a href="{{ route('bank_manage') }}">添加银行卡</a></p>
     @endif

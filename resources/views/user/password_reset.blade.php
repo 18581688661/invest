@@ -10,22 +10,22 @@
         <form method="POST" action="{{ route('password.reset') }}">
           {{ csrf_field() }}
           <div class="form-group">
-            <label for="email">注册邮箱：</label>
+            <label for="email" style="width: 100px;">注册邮箱：</label>
             <input type="email" class="form-control" name="email" value="{{ old('email') }}">
             <input id="email_btn" class=" btn btn-info" type="button" value="发送邮箱验证码"/>
           </div>
           <div class="form-group">
-            <label for="verification_code">验证码：</label>
+            <label for="verification_code" style="width: 100px;">验证码：</label>
             <input type="text" name="verification_code" class="form-control" value="{{ old('verification_code') }}">
           </div>
 
           <div class="form-group">
-            <label for="password">请输入新密码：</label>
+            <label for="password" style="width: 100px;">请输入新密码：</label>
             <input type="password" name="password" class="form-control" value="{{ old('password') }}">
           </div>
 
           <div class="form-group">
-            <label for="password_confirmation">请确认新密码：</label>
+            <label for="password_confirmation" style="width: 100px;">请确认新密码：</label>
             <input type="password" name="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}">
           </div>
 

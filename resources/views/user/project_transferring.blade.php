@@ -40,7 +40,7 @@
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">投资金额</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">投资时间</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">转让时间</td>
-                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">预期收益</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">实际收益</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">备注</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">状态</td>
         		</tr>

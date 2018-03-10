@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Manager;
 use App\Models\Transaction_details;
 use App\Models\Project;
+use App\Models\Withdrawals;
 use Alert;
 use Mail;
 use Auth;
@@ -64,7 +65,6 @@ class ManagerController extends Controller
                         ]);
                 }
             }
-
         }
         $projects=Project::orderBy('project_start_time', 'desc')->get();
     	return view('manager.project_manage',compact('projects'));
@@ -96,4 +96,60 @@ class ManagerController extends Controller
             Alert::success('恭喜你，项目添加成功！');
             return redirect()->back();
     }
+
+    public function withdrawals_manage()
+    {
+        $withdrawals=Withdrawals::where('state',0)->paginate(10);
+        return view('manager/withdrawals_manage',compact('withdrawals'));
+    }
+
+    public function all_withdrawals()
+    {
+        $withdrawals=Withdrawals::orderBy('withdrawals_time','desc')->paginate(10);
+        return view('manager/all_withdrawals',compact('withdrawals'));
+    }
+
+    public function withdrawals_handle(Request $request)
+    {
+        $withdrawals=Withdrawals::findOrFail($request->withdrawals_id);
+        $pass=$request->pass;
+        $user=User::findOrFail($withdrawals->user_id);
+
+        if($pass == 1)
+        {
+            $withdrawals->state=1;
+            $withdrawals->handle_time=Carbon::now();
+            $withdrawals->remarks=$request->remarks;
+            $withdrawals->save();
+
+            $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'提现成功',
+                        'amount'=>$withdrawals->withdrawals_amount,
+                        'remarks'=>'提现成功-'.$request->remarks,
+                        ]);
+            Alert::success('处理成功！');
+            return redirect()->back();
+        }
+
+        else
+        {
+            $withdrawals->state=2;
+            $withdrawals->handle_time=Carbon::now();
+            $withdrawals->remarks=$request->remarks;
+            $withdrawals->save();
+            $user->balance += $withdrawals->withdrawals_amount;
+            $user->save();
+            $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'提现失败',
+                        'amount'=>$withdrawals->withdrawals_amount,
+                        'remarks'=>'提现失败-'.$request->remarks,
+                        ]);
+            Alert::success('处理成功！');
+            return redirect()->back();
+        }
+    } 
 }

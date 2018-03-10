@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Invest;
 use App\Models\Transaction_details;
+use App\Models\Withdrawals;
 use Alert;
 use Mail;
 use Auth;
@@ -93,8 +95,21 @@ class UserController extends Controller
     {
         $id=Auth::user()->get()->id;
         $user = User::findOrFail($id);
+        $invests=Invest::where('user_id',$user->id)->whereIn('invest_state',[0,2])->get();
+        $invest_money=0;
+        foreach($invests as $invest)
+        {
+            $invest_money += $invest->invest_amount;
+        }
+        $withdrawals=Withdrawals::where('user_id',$user->id)->where('state',0)->get();
+        $frozen_money=0;
+        foreach($withdrawals as $withdrawal)
+        {
+            $frozen_money += $withdrawal->withdrawals_amount;
+        }
+        $total_money=$user->balance + $invest_money + $frozen_money;
         $transaction_details=Transaction_details::where('user_id','=',$user->id)->orderBy('transaction_time', 'desc')->take(8)->get();
-        return view('user.show',compact('transaction_details'));
+        return view('user.show',compact('transaction_details','total_money','invest_money','frozen_money'));
     }
 
     public function message()//消息中心
@@ -256,7 +271,8 @@ class UserController extends Controller
 
     public function withdrawals()//提现页面
     {
-        return view('user.withdrawals');
+        $withdrawals=Withdrawals::where('user_id',Auth::user()->get()->id)->orderBy('withdrawals_time', 'desc')->get();
+        return view('user.withdrawals',compact('withdrawals'));
     }
 
     public function withdrawals1(Request $request)
@@ -280,7 +296,13 @@ class UserController extends Controller
                 'amount'=>$request->amount,
                 'remarks'=>'冻结',
                 ]);
-                Alert::success('恭喜你，提现申请成功！');
+                $withdrawals=Withdrawals::create([
+                'user_id'=>$user->id,
+                'state' => 0,
+                'withdrawals_time'=>Carbon::now(),
+                'withdrawals_amount'=>$request->amount,
+                ]);
+                Alert::success('恭喜你，提现申请成功，请耐心等待平台处理！');
                 return redirect()->back();
             }
             else
@@ -365,7 +387,7 @@ class UserController extends Controller
         $code=rand(100000,999999);
         Session_Start();
         $_SESSION["verify_code"]=$code;
-        $content="【清风理财】验证码：".$code;//要发送的短信内容
+        $content="项目测试：您的验证码为：".$code;//要发送的短信内容
         $phone = $_GET["mobile"];
         $sendurl = $smsapi."sms?u=".$user."&p=".$pass."&m=".$phone."&c=".urlencode($content);
         $result =file_get_contents($sendurl) ;

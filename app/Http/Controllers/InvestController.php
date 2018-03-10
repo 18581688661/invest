@@ -181,6 +181,7 @@ class InvestController extends Controller
                         'amount'=>$invest->profit,
                         'remarks'=>'项目转让成功-'.$project->project_name,
                         ]);
+                $user1->profit += $invest->profit;
                 $user1->save();
 
                 //购买人相关操作
