@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 use App\Models\Project;
+use App\Models\Message;
 use App\Models\User;
 use App\Models\Invest;
 use App\Models\Website_info;
@@ -65,6 +66,12 @@ class StaticPagesController extends Controller
                         'transaction_type'=>'项目回款(收益)',
                         'amount'=>$invest->profit,
                         'remarks'=>'项目回款-'.$project->project_name,
+                        ]);
+                    $message=Message::create([
+                        'user_id'=>$user->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您投资的项目【".$project->project_name."】已经按时回款，请前往个人中心查看详细信息！",
+                        'state'=>0,
                         ]);
                 }
             }

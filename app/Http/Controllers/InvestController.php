@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Project;
 use App\Models\Invest;
 use App\Models\Website_info;
+use App\Models\Message;
 use App\Models\Transaction_details;
 use Alert;
 use Mail;
@@ -70,6 +71,12 @@ class InvestController extends Controller
                         ]);
                     $user->balance -= $request->invest_amount;
                     $user->save();
+                    $message=Message::create([
+                        'user_id'=>$user->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您已成功投资项目【".$project->project_name."】".$request->invest_amount."元！",
+                        'state'=>0,
+                        ]);
                     Alert::success('恭喜你，投资成功！');
                     return redirect()->back();
                 }
@@ -182,6 +189,12 @@ class InvestController extends Controller
                         'remarks'=>'项目转让成功-'.$project->project_name,
                         ]);
                 $user1->profit += $invest->profit;
+                $message=Message::create([
+                        'user_id'=>$user1->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您转让的项目【".$project->project_name."】已经成功转让，请前往个人中心查看详细信息！",
+                        'state'=>0,
+                        ]);
                 $user1->save();
 
                 //购买人相关操作
@@ -208,6 +221,12 @@ class InvestController extends Controller
                         ]);
                 $user->balance -= $invest->invest_amount;
                 $user->save();
+                $message=Message::create([
+                        'user_id'=>$user->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您已成功购买转让项目【".$project->project_name."】".$invest->invest_amount."元！",
+                        'state'=>0,
+                        ]);
                     Alert::success('恭喜你，转让购买成功！');
                     return redirect()->back();
                 }

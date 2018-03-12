@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Invest;
 use App\Models\Transaction_details;
 use App\Models\Withdrawals;
+use App\Models\Message;
 use Alert;
 use Mail;
 use Auth;
@@ -40,6 +41,12 @@ class UserController extends Controller
                 'password'=>bcrypt($request->password),
                 'capital_password'=>$request->capital_password,
                 'email'=>$request->email,
+                ]);
+            $message=Message::create([
+                'user_id'=>$user->id,
+                'time'=>Carbon::now(),
+                'text'=>"恭喜您，注册成为本站用户！请尽快完善各项信息认证，保障账户安全。",
+                'state'=>0,
                 ]);
             // session()->flash('success', '恭喜你，注册成功！');
             Alert::success('恭喜你，注册成功！');
@@ -114,7 +121,24 @@ class UserController extends Controller
 
     public function message()//消息中心
     {
-        return view('user.message');
+        $messages=Message::where('user_id',Auth::user()->get()->id)->orderBy('time','desc')->paginate(10);
+        return view('user.message',compact('messages'));
+    }
+
+    public function message_handle(Request $request)
+    {
+        $message=Message::findOrFail($request->message_id);
+        $message->state=1;
+        $message->save();
+        Alert::success('成功！');
+        return redirect()->back();
+    }
+
+    public function message_handle_all()
+    {
+        $message=Message::where('user_id',Auth::user()->get()->id)->where('state',0)->update(['state'=>1]);
+        Alert::success('全部消息已标为已读！');
+        return redirect()->back();
     }
 
     public function certification()//实名认证页

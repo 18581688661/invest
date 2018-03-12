@@ -29,6 +29,8 @@ resource('user', 'UserController');//用户CURD
 Route::get('/show','UserController@show')->name('show');//个人中心
 
 Route::get('/message','UserController@message')->name('message');//消息中心
+Route::post('/message_handle','UserController@message_handle')->name('message_handle');//消息标为已读
+Route::post('/message_handle_all','UserController@message_handle_all')->name('message_handle_all');//消息全部标为已读
 
 Route::get('/certification','UserController@certification')->name('certification');//实名认证页
 Route::post('/certificate','UserController@certificate')->name('certificate');//实名认证

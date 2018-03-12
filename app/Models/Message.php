@@ -10,9 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-use Auth;
-
-class User extends Model implements AuthenticatableContract,
+class Message extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
@@ -23,14 +21,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'message';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['username', 'email', 'password','capital_password','balance','profit'];
+    protected $fillable = ['id','user_id','time','state','time','text'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -38,11 +36,4 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-    public function get_message_count()
-    {
-        $message=Message::where('user_id',Auth::user()->get()->id)->where('state',0)->get();
-        $amount=count($message);
-        return $amount;
-    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Message;
 use App\Models\Manager;
 use App\Models\Transaction_details;
 use App\Models\Project;
@@ -62,6 +63,12 @@ class ManagerController extends Controller
                         'transaction_type'=>'项目回款(收益)',
                         'amount'=>$invest->profit,
                         'remarks'=>'项目回款-'.$project->project_name,
+                        ]);
+                    $message=Message::create([
+                        'user_id'=>$user->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您投资的项目【".$project->project_name."】已经按时回款，请前往个人中心查看详细信息！",
+                        'state'=>0,
                         ]);
                 }
             }
@@ -129,6 +136,12 @@ class ManagerController extends Controller
                         'amount'=>$withdrawals->withdrawals_amount,
                         'remarks'=>'提现成功-'.$request->remarks,
                         ]);
+            $message=Message::create([
+                'user_id'=>$user->id,
+                'time'=>Carbon::now(),
+                'text'=>"您于【".$withdrawals->withdrawals_time."】申请的提现".$withdrawals->withdrawals_amount."元平台已经审核通过了，请关注银行到账信息！",
+                'state'=>0,
+                ]);
             Alert::success('处理成功！');
             return redirect()->back();
         }
@@ -148,6 +161,12 @@ class ManagerController extends Controller
                         'amount'=>$withdrawals->withdrawals_amount,
                         'remarks'=>'提现失败-'.$request->remarks,
                         ]);
+            $message=Message::create([
+                'user_id'=>$user->id,
+                'time'=>Carbon::now(),
+                'text'=>"您于【".$withdrawals->withdrawals_time."】申请的提现".$withdrawals->withdrawals_amount."元没有什么通过，原因为：".$request->remarks,
+                'state'=>0,
+                ]);
             Alert::success('处理成功！');
             return redirect()->back();
         }

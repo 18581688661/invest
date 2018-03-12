@@ -14,10 +14,18 @@
                         <li>
                             <a class="dropdown-toggle" data-toggle="dropdown">
                                 {{ Auth::user()->get()->username }}
+                                @if(Auth::user()->get()->get_message_count() >0 )
+                                <span class="badge">{{ Auth::user()->get()->get_message_count() }}</span>
+                                @endif
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ route('show')}}">个人中心</a></li>
+                                <li><a href="{{ route('message')}}">消息中心
+                                    @if(Auth::user()->get()->get_message_count() >0 )
+                                    <span class="badge">{{ Auth::user()->get()->get_message_count() }}</span>
+                                    @endif
+                                </a></li>
                                 <li class="divider"></li>
                                 <li>
                                     <a id="logout" href="#">
