@@ -13,6 +13,7 @@ use App\Models\Manager;
 use App\Models\Transaction_details;
 use App\Models\Project;
 use App\Models\Withdrawals;
+use App\Models\Notice;
 use Alert;
 use Mail;
 use Auth;
@@ -170,5 +171,23 @@ class ManagerController extends Controller
             Alert::success('处理成功！');
             return redirect()->back();
         }
-    } 
+    }
+
+    public function notice_manage()
+    {
+        $notices=Notice::orderBy('time','desc')->paginate(10);
+        return view('manager/notice_manage',compact('notices'));
+    }
+
+    public function notice_add(Request $request)
+    {
+        $notice=Notice::create([
+                'title'=>$request->title,
+                'text'=>$request->text,
+                'time'=>Carbon::now(),
+                ]);
+            // session()->flash('success', '恭喜你，注册成功！');
+            Alert::success('公告发布成功！');
+            return redirect()->back();
+    }
 }

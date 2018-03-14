@@ -4,9 +4,7 @@
                     <a href="/" class="navbar-brand">清风理财</a>
                 </div>
                 <ul class="nav navbar-nav navbar-left">
-                    @if (!Auth::manager()->check())
-                    <li><a href="#">平台公告</a></li>
-                    @endif
+                    <li><a href="{{ route('notice_browse') }}">平台公告</a></li>
                 </ul>
                 @if (Auth::user()->check())
                 <div class="container">

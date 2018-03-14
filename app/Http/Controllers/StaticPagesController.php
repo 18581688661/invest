@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Notice;
 use App\Models\Invest;
 use App\Models\Website_info;
 use App\Models\Transaction_details;
@@ -91,9 +92,10 @@ class StaticPagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function notice_browse()
     {
-        //
+        $notices=Notice::orderBy('time','desc')->paginate(10);
+        return view('static_pages/notice_browse',compact('notices'));
     }
 
     /**

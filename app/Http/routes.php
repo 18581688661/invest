@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'StaticPagesController@index')->name('index');//首页
+Route::get('/notice_browse', 'StaticPagesController@notice_browse')->name('notice_browse');//公告页
 
 Route::get('/email','UserController@email')->name('email');//发送邮箱验证码
 Route::get('/sms','UserController@sms')->name('sms');//发送短信验证码
@@ -76,3 +77,5 @@ Route::post('project_add','ManagerController@project_add')->name('project_add');
 Route::get('withdrawals_manage','ManagerController@withdrawals_manage')->name('withdrawals_manage');//提现管理页
 Route::post('withdrawals_handle','ManagerController@withdrawals_handle')->name('withdrawals_handle');//提现处理
 Route::get('all_withdrawals','ManagerController@all_withdrawals')->name('all_withdrawals');//查看所有提现申请
+Route::get('notice_manage','ManagerController@notice_manage')->name('notice_manage');//公告管理页
+Route::post('notice_add','ManagerController@notice_add')->name('notice_add');//公告新增
