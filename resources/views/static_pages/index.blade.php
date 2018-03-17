@@ -64,7 +64,7 @@
         </div>
         @if (count($projects))
         @foreach ($projects as $project)
-        <div style="background: #F7F7F9;height: 280px;border-bottom: 1px dashed">
+        <div style="background: #F7F7F9;height: 283px;border-bottom: 1px dashed">
             <div>
                 <div style="float: left;font-size: 25px;color: #777;margin-top: 14px;margin-left: 66px">{{$project->project_name}}</div>
                 @if($project->project_state == 0)

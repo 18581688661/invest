@@ -41,6 +41,9 @@ class UserController extends Controller
                 'password'=>bcrypt($request->password),
                 'capital_password'=>$request->capital_password,
                 'email'=>$request->email,
+                'signup_time'=>Carbon::now(),
+                'last_login_time'=>Carbon::now(),
+                'this_login_time'=>Carbon::now(),
                 ]);
             $message=Message::create([
                 'user_id'=>$user->id,

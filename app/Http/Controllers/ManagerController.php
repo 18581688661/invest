@@ -13,6 +13,8 @@ use App\Models\Manager;
 use App\Models\Transaction_details;
 use App\Models\Project;
 use App\Models\Withdrawals;
+use App\Models\Website_info;
+use App\Models\Invest;
 use App\Models\Notice;
 use Alert;
 use Mail;
@@ -24,7 +26,41 @@ class ManagerController extends Controller
     {
         $id=Auth::manager()->get()->id;
         $manager = Manager::findOrFail($id);
-        return view('manager.show');
+        $signup_num=count(User::all());
+        $today_signup_num=count(User::whereBetween('signup_time',array(Carbon::today(),Carbon::tomorrow()))->get());
+        $startdate=strtotime(Carbon::parse('2018-01-01 00:00:00'));
+        $enddate=strtotime(Carbon::now());
+        $work_days=round(($enddate-$startdate)/3600/24); 
+        $website_info=Website_info::findOrFail(1);
+        $invests=Invest::whereBetween('invest_start_time',array(Carbon::today(),Carbon::tomorrow()))->get();
+        $today_invest=0;
+        foreach($invests as $invest)
+        {
+           $today_invest += $invest->invest_amount;
+        }
+        $projects=Project::all();
+        $project_num=count($projects);
+        $project_all_amount=0;
+        foreach($projects as $project)
+        {
+            $project_all_amount += $project->project_amount;
+        }
+
+        $projects=Project::where('project_state',2)->get();
+        $backing_amount=0;
+        foreach($projects as $project)
+        {
+            $backing_amount += $project->project_amount;
+        }
+
+        $invests=Invest::where('invest_state',2)->get();
+        $transferring_amount=0;
+        foreach($invests as $invest)
+        {
+            $transferring_amount += $invest->invest_amount;
+        }
+
+        return view('manager.show',compact('backing_amount','transferring_amount','project_num','project_all_amount','today_invest','website_info','projects','signup_num','today_signup_num','work_days'));
     }
 
     public function project_manage()
@@ -74,7 +110,7 @@ class ManagerController extends Controller
                 }
             }
         }
-        $projects=Project::orderBy('project_start_time', 'desc')->get();
+        $projects=Project::orderBy('project_start_time', 'desc')->paginate(10);
     	return view('manager.project_manage',compact('projects'));
     }
 
@@ -175,7 +211,7 @@ class ManagerController extends Controller
 
     public function notice_manage()
     {
-        $notices=Notice::orderBy('time','desc')->paginate(10);
+        $notices=Notice::orderBy('time','desc')->paginate(5);
         return view('manager/notice_manage',compact('notices'));
     }
 
@@ -189,5 +225,17 @@ class ManagerController extends Controller
             // session()->flash('success', '恭喜你，注册成功！');
             Alert::success('公告发布成功！');
             return redirect()->back();
+    }
+
+    public function user_manage()
+    {
+        $users=User::paginate(10);
+        return view('manager/user_manage',compact('users'));
+    }
+
+    public function user_search(Request $request)
+    {
+        $users=User::where('username','like','%'.$request->keyword.'%')->paginate(10);
+        return view('manager/user_manage',compact('users'));
     }
 }

@@ -94,7 +94,7 @@ class StaticPagesController extends Controller
      */
     public function notice_browse()
     {
-        $notices=Notice::orderBy('time','desc')->paginate(10);
+        $notices=Notice::orderBy('time','desc')->paginate(5);
         return view('static_pages/notice_browse',compact('notices'));
     }
 

@@ -4,7 +4,7 @@
 <div class="container col-lg-2" style="border-right: 1px dashed">
 	<ul class="nav nav-pills nav-stacked">
 		<li style="text-align: center"><a href="{{ route('mana_show') }}" style="font-size: 17px"><span class="glyphicon glyphicon-home"></span>&nbsp&nbsp平台概览</a></li>
-		<li style="text-align: center"><a href="#" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp用户管理</a></li>
+		<li style="text-align: center"><a href="{{ route('user_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp用户管理</a></li>
 		<li style="text-align: center"><a href="{{ route('withdrawals_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp提现管理</a></li>
 		<li style="text-align: center" class="active"><a href="{{ route('project_manage') }}" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp项目管理</a></li>
 		<li style="text-align: center"><a href="{{ route('notice_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-bell"></span>&nbsp&nbsp公告管理</a></li>
@@ -12,10 +12,10 @@
 </div>
 <div class="container col-lg-10">
 	<h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp投资项目管理</h4>
-	<a href="javascript:;" class="md-trigger" data-modal="modal-1"><button class="btn btn-primary">新增投资项目</button></a>
-    <hr>
+	<a href="javascript:;" class="md-trigger" data-modal="modal-1"><button class="btn btn-success">新增投资项目</button></a>
+    <!-- <hr> -->
     @if (count($projects))
-            <table class="table ">
+            <table class="table" style="margin-top: 10px;">
                 <tr>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">项目名称</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">项目金额</td>
@@ -43,6 +43,7 @@
                 </tr>
                 @endforeach
             </table>
+            <div class="text-center">{!! $projects->render() !!}</div>
             @endif
 	<div class="md-modal md-effect-17" id="modal-1">
     <div class="md-content">

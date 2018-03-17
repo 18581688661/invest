@@ -27,9 +27,9 @@ class CreateUserTable extends Migration
             $table->float('profit')->default(0);
             $table->string('image_url')->nullable()->unique();
             $table->dateTime('certification_time')->nullable();
-            $table->dateTime('last_login_time')->default(Carbon::now());
-            $table->dateTime('this_login_time')->default(Carbon::now());
-            $table->dateTime('signup_time')->default(Carbon::now());
+            $table->dateTime('last_login_time');
+            $table->dateTime('this_login_time');
+            $table->dateTime('signup_time');
             $table->dateTime('risk_time')->nullable();
             $table->Integer('risk_score')->nullable();
             $table->string('bank_name')->nullable();
