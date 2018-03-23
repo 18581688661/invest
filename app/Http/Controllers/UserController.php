@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use App\Models\Invest;
 use App\Models\Transaction_details;
 use App\Models\Withdrawals;
 use App\Models\Message;
+use App\Models\Recharge;
 use Alert;
 use Mail;
 use Auth;
@@ -293,12 +295,101 @@ class UserController extends Controller
 
     public function recharge()//充值页面
     {
-        return view('user.recharge');
+        $recharges=Recharge::where('user_id',Auth::user()->get()->id)->orderBy('recharge_time', 'desc')->paginate(10);
+        return view('user.recharge',compact('recharges'));
     }
+
+    public function recharge_middle(Request $request)
+    {
+        $user=Auth::user()->get();
+        $goodsname="【清风项目测试】充值";
+        $istype=$request->istype;
+        $notify_url=route('recharge_over');
+        $orderid=time();
+        $orderuid=$user->username;
+        $price=$request->amount;
+        $return_url=route('recharge_success');
+        $token="20596966e1c37cf64f72de079c556cfd";
+        $uid="82b1e016947f6aaf1bc10585";
+        $str=$goodsname.$istype.$notify_url.$orderid.$orderuid.$price.$return_url.$token.$uid;
+        $key=md5($str);
+        $recharge=Recharge::create([
+                'user_id'=>$user->id,
+                'state' => 0,
+                'orderid'=>$orderid,
+                'recharge_time'=>Carbon::now(),
+                'istype'=>$istype,
+                'recharge_amount'=>$request->amount,
+                ]);
+        return view('user/recharge_middle',compact('goodsname','istype','notify_url','orderid','orderuid','price','return_url','uid','key'));
+    }
+
+    public function recharge_over(Request $request)
+    {
+        $orderid=$request->orderid;
+        $orderuid=$request->orderuid;
+        $paysapi_id=$request->paysapi_id;
+        $price=$request->price;
+        $realprice=$request->realprice;
+        $key=$request->key;
+
+        $token="20596966e1c37cf64f72de079c556cfd";
+
+        $str=md5($orderid . $orderuid . $paysapi_id . $price . $realprice . $token);
+
+        if($key==$str)
+        {
+            $content = '测试response';
+            $status = 200;
+            $value = 'text/html;charset=utf-8';
+            $response = new \Illuminate\Http\Response($content,$status);
+            return $response->header('Content-Type', $value);
+        }
+        else
+        {
+            $content = '测试response1';
+            $status = 500;
+            $value = 'text/html;charset=utf-8';
+            $response = new \Illuminate\Http\Response($content,$status);
+            return $response->header('Content-Type', $value);
+        }
+
+    }
+
+    public function recharge_success(Request $request)
+    {
+        $user=Auth::user()->get();
+        $recharge=Recharge::where('orderid',$request->orderid)->first();
+        $recharge->state=1;
+        $recharge->recharge_time=Carbon::now();
+        $recharge->save();
+
+        $user->balance += $recharge->recharge_amount;
+        $user->save();
+        $remarks="";
+        if($recharge->istype==1)
+        {
+            $remarks="支付宝充值";
+        }
+        else{
+            $remarks="微信充值";
+        }
+        
+        $transaction_detail=Transaction_details::create([
+                'user_id'=>$user->id,
+                'transaction_time'=>Carbon::now(),
+                'transaction_type'=>'充值',
+                'amount'=>$recharge->recharge_amount,
+                'remarks'=>$remarks,
+                ]);
+
+        $orderid=$request->orderid;
+        return view('user.recharge_success',compact('orderid','transaction_detail'));
+    } 
 
     public function withdrawals()//提现页面
     {
-        $withdrawals=Withdrawals::where('user_id',Auth::user()->get()->id)->orderBy('withdrawals_time', 'desc')->get();
+        $withdrawals=Withdrawals::where('user_id',Auth::user()->get()->id)->orderBy('withdrawals_time', 'desc')->paginate(10);
         return view('user.withdrawals',compact('withdrawals'));
     }
 

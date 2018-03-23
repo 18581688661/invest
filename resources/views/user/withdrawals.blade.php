@@ -73,6 +73,7 @@
             </tr>
             @endforeach
           </table>
+          <div class="text-center">{!! $withdrawals->render() !!}</div>
             @else
             <p>暂无提现记录！</p>
             @endif

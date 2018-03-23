@@ -32,62 +32,26 @@
 </div>
 <div class="container col-lg-10">
   <h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp资金充值</h4>
-  @if(Auth::user()->get()->real_name)
-  <div class="container col-lg-6" style="margin-top: 20px">
-    <form method="POST" class="form-inline" action="{{ route('recharge_middle') }}">
-        <!-- @include('shared.errors') -->
+  <p style="font-size: 18px;color: #666;margin-top: 20px;">请确认充值信息：</p>
+  <div class="" style="margin-top: 20px">
+    <form method="POST" action="https://pay.paysapi.com/">
         @include('shared.messages')
         {{ csrf_field() }}
         <div class="form-group">
-            <label for="amount" style="width: 80px;">充值金额：</label>
-            <input type="number" name="amount" min="1" max="100000" class="form-control" value="{{ old('amount') }}" required>
-            <p style="font-size: 14px;color: #999;margin-top: 20px">请输入1-100,000之间的正整数</p>
-            <label for="amount" style="width: 80px;">充值方式：</label>
-            <div class="radio">
-                <label>
-                    <p><input type="radio" name="istype" value="1" checked>
-                        <img src="images/alipay.png"></p>
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <p><input type="radio" name="istype" value="2">
-                            <img src="images/weixinpay.png"></p>
-                        </label>
-                    </div>
+            <p style="font-size: 18px;color: #666;margin-top: 20px;">充值金额：¥{{ $price }}元</p>
+            <p style="font-size: 18px;color: #666;margin-top: 20px;">支付方式：@if($istype==1)<img src="images/alipay.png">@else<img src="images/weixinpay.png">@endif</p>
+            <input type="hidden" name="uid" value="{{ $uid }}">
+            <input type="hidden" name="price" value="{{ $price }}">
+            <input type="hidden" name="istype" value="{{ $istype }}">
+            <input type="hidden" name="notify_url" value="{{ $notify_url }}">
+            <input type="hidden" name="return_url" value="{{ $return_url }}">
+            <input type="hidden" name="orderid" value="{{ $orderid }}">
+            <input type="hidden" name="orderuid" value="{{ $orderuid }}">
+            <input type="hidden" name="goodsname" value="{{ $goodsname }}">
+            <input type="hidden" name="key" value="{{ $key }}">
         </div>
-        <div>
-        <button type="submit" class="btn btn-success">充值</button></div>
+        <button type="submit" class="btn btn-success">前往充值</button>
     </form>
 </div>
-<div class="col-lg-12">
-      <h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp充值记录</h4>
-      @if (count($recharges))
-          <table class="table">
-            <tr>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">充值金额</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">充值订单号</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">充值渠道</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">状态</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">时间</td>
-            </tr>
-                @foreach ($recharges as $recharge)
-            <tr>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥{{ $recharge->recharge_amount }}</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $recharge->orderid }}</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($recharge->istype==1)支付宝充值@else微信支付@endif</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($recharge->state == 0)充值失败@else充值成功@endif</td>
-              <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $recharge->recharge_time }}</td>
-            </tr>
-            @endforeach
-          </table>
-          <div class="text-center">{!! $recharges->render() !!}</div>
-            @else
-            <p>暂无充值记录！</p>
-            @endif
-    </div>
-@else
-<p style="color: #999;font-size: 18px;margin-top: 20px;">您尚未进行实名认证，请先进行<a href="{{ route('certification') }}">实名认证</a></p>
-@endif
 </div>
 @stop

@@ -50,6 +50,9 @@ Route::post('bank_unbinding','UserController@bank_unbinding')->name('bank_unbind
 
 Route::get('transaction_record','UserController@transaction_record')->name('transaction_record');//交易记录页面
 Route::get('recharge','UserController@recharge')->name('recharge');//充值页面
+Route::post('recharge_middle','UserController@recharge_middle')->name('recharge_middle');//充值中转页
+Route::post('recharge_over','UserController@recharge_over')->name('recharge_over');//充值逻辑
+Route::get('recharge_success','UserController@recharge_success')->name('recharge_success');//充值成功页
 Route::get('withdrawals','UserController@withdrawals')->name('withdrawals');//提现页面
 Route::post('withdrawals1','UserController@withdrawals1')->name('withdrawals1');//提现操作
 
