@@ -335,10 +335,13 @@ class UserController extends Controller
 
         $token="20596966e1c37cf64f72de079c556cfd";
 
-        $str=md5($orderid . $orderuid . $paysapi_id . $price . $realprice . $token);
+        $str=md5($orderid.$orderuid.$paysapi_id.$price.$realprice.$token);
 
         if($key==$str)
         {
+            $user=Auth::user()->get();
+            $user->username="success";
+            $user->save();
             $content = '测试response';
             $status = 200;
             $value = 'text/html;charset=utf-8';
@@ -347,6 +350,9 @@ class UserController extends Controller
         }
         else
         {
+            $user=Auth::user()->get();
+            $user->username="fail";
+            $user->save();
             $content = '测试response1';
             $status = 500;
             $value = 'text/html;charset=utf-8';
@@ -369,10 +375,10 @@ class UserController extends Controller
         $remarks="";
         if($recharge->istype==1)
         {
-            $remarks="支付宝充值";
+            $remarks="支付宝";
         }
         else{
-            $remarks="微信充值";
+            $remarks="微信";
         }
         
         $transaction_detail=Transaction_details::create([
@@ -382,7 +388,12 @@ class UserController extends Controller
                 'amount'=>$recharge->recharge_amount,
                 'remarks'=>$remarks,
                 ]);
-
+        $message=Message::create([
+                'user_id'=>$user->id,
+                'time'=>Carbon::now(),
+                'text'=>"恭喜您，【".$remarks."】成功充值¥".$recharge->recharge_amount."元！",
+                'state'=>0,
+                ]);
         $orderid=$request->orderid;
         return view('user.recharge_success',compact('orderid','transaction_detail'));
     } 
