@@ -326,20 +326,18 @@ class UserController extends Controller
 
     public function recharge_over(Request $request)
     {
+        $user=Auth::user()->get();
         $orderid=$request->orderid;
         $orderuid=$request->orderuid;
         $paysapi_id=$request->paysapi_id;
         $price=$request->price;
         $realprice=$request->realprice;
         $key=$request->key;
-
         $token="20596966e1c37cf64f72de079c556cfd";
-
-        $str=md5($orderid.$orderuid.$paysapi_id.$price.$realprice.$token);
-
+        $string=$orderid.$orderuid.$paysapi_id.$price.$realprice.$token;
+        $str=md5($string);
         if($key==$str)
         {
-            $user=Auth::user()->get();
             $user->username="success";
             $user->save();
             $content = '测试response';
@@ -350,7 +348,6 @@ class UserController extends Controller
         }
         else
         {
-            $user=Auth::user()->get();
             $user->username="fail";
             $user->save();
             $content = '测试response1';
