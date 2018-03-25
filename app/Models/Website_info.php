@@ -28,7 +28,7 @@ class Website_info extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['total_investment', 'user_profit'];
+    protected $fillable = ['total_investment', 'user_profit','current_amount','current_profit'];
 
     /**
      * The attributes excluded from the model's JSON form.

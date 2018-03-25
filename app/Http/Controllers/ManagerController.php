@@ -227,6 +227,13 @@ class ManagerController extends Controller
             return redirect()->back();
     }
 
+    public function notice_del(Request $request)
+    {
+        Notice::findOrFail($request->notice_id)->delete();
+            Alert::success('公告删除成功！');
+            return redirect()->back();
+    }
+
     public function user_manage()
     {
         $users=User::paginate(10);
@@ -237,5 +244,26 @@ class ManagerController extends Controller
     {
         $users=User::where('username','like','%'.$request->keyword.'%')->paginate(10);
         return view('manager/user_manage',compact('users'));
+    }
+
+    public function invest_his(Request $request)
+    {
+        $invests=Invest::where('project_id',$request->project_id)->whereBetween('invest_state',array(0,2))->paginate(10);
+        return view('manager.invest_his',compact('invests'));
+    }
+
+    public function current_manage()
+    {
+        $website_info=Website_info::findOrFail(1);
+        return view('manager.current_manage',compact('website_info'));
+    }
+
+    public function current_profit(Request $request)
+    {
+        $website_info=Website_info::findOrFail(1);
+        $website_info->year_profit=$request->year_profit;
+        $website_info->save();
+        Alert::success('活期存款年化收益率修改成功！');
+        return redirect()->back();
     }
 }

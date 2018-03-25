@@ -8,7 +8,8 @@
 		<li style="text-align: center"><a href="{{ route('withdrawals_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp提现管理</a></li>
 		<li style="text-align: center"><a href="{{ route('project_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp项目管理</a></li>
 		<li style="text-align: center"><a href="{{ route('notice_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-bell"></span>&nbsp&nbsp公告管理</a></li>
-	</ul>
+        <li style="text-align: center"><a href="{{ route('current_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-usd"></span>&nbsp&nbsp活期存款</a></li>
+    </ul>
 </div>
 <div class="container col-lg-10">
 	<h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp用户管理</h4>

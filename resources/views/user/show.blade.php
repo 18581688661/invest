@@ -23,6 +23,7 @@
                 <li style="text-align: center"><a href="{{ route('project_transferring') }}" style="font-size: 16px">转让中项目</a></li>
                 <li style="text-align: center"><a href="{{ route('project_transferred') }}" style="font-size: 16px">已转让项目</a></li>
                 <li style="text-align: center"><a href="{{ route('transferring') }}" style="font-size: 16px">转让中心</a></li>
+                <li style="text-align: center"><a href="{{ route('current_deposit') }}" style="font-size: 16px">活期存款</a></li>
             </ul>
         </div>
 		<li style="text-align: center"><a href="{{ route('certification') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp实名认证</a></li>
@@ -79,7 +80,7 @@
         		<tr>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $transaction_detail->transaction_time }}</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $transaction_detail->transaction_type }}</td>
-        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($transaction_detail->transaction_type == '投资支出')-@elseif($transaction_detail->transaction_type == '充值')+@elseif($transaction_detail->transaction_type == '项目转让(本金)')+@elseif($transaction_detail->transaction_type == '项目转让(收益)')+@elseif($transaction_detail->transaction_type == '购买转让')-@elseif($transaction_detail->transaction_type == '项目回款(本金)')+@elseif($transaction_detail->transaction_type == '项目回款(收益)')+@elseif($transaction_detail->transaction_type == '提现成功')-@endif{{ $transaction_detail->amount }}</td>
+        			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($transaction_detail->transaction_type == '投资支出')-@elseif($transaction_detail->transaction_type == '存款支出')-@elseif($transaction_detail->transaction_type == '活期存款赎回')+@elseif($transaction_detail->transaction_type == '利息收入')+@elseif($transaction_detail->transaction_type == '充值')+@elseif($transaction_detail->transaction_type == '项目转让(本金)')+@elseif($transaction_detail->transaction_type == '项目转让(收益)')+@elseif($transaction_detail->transaction_type == '购买转让')-@elseif($transaction_detail->transaction_type == '项目回款(本金)')+@elseif($transaction_detail->transaction_type == '项目回款(收益)')+@elseif($transaction_detail->transaction_type == '提现成功')-@endif{{ $transaction_detail->amount }}</td>
         			<td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($transaction_detail->remarks =='支付宝' || $transaction_detail->remarks =='微信'){{ $transaction_detail->remarks }}充值@else{{ $transaction_detail->remarks }}@endif</td>
         		</tr>
         		@endforeach

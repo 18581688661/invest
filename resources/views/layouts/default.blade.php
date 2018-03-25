@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="/css/buttons.css">
     <link href="http://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
     <link href="css/component.css" rel="stylesheet">
-
+    
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9mGs9G3Lo7nEqqsGGWrpP1BHFUYI3Al5"></script>
+    <style type="text/css"> 
+    #allmap { 
+        width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑"; 
+    } 
+    </style>
   </head>
     <body>
         @include('layouts._header')
@@ -23,6 +29,7 @@
     <script src="http://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.js"></script>
     <script src="js/classie.js"></script>
     <script src="js/modalEffects.js"></script>
+    <script src="js/GeoUtils_min.js"></script>
 
     @include('sweet::alert')
     @yield('script')

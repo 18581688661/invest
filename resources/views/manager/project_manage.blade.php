@@ -6,13 +6,14 @@
 		<li style="text-align: center"><a href="{{ route('mana_show') }}" style="font-size: 17px"><span class="glyphicon glyphicon-home"></span>&nbsp&nbsp平台概览</a></li>
 		<li style="text-align: center"><a href="{{ route('user_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp用户管理</a></li>
 		<li style="text-align: center"><a href="{{ route('withdrawals_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp提现管理</a></li>
-		<li style="text-align: center" class="active"><a href="{{ route('project_manage') }}" style="font-size: 17px" data-toggle="collapse"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp项目管理</a></li>
+		<li style="text-align: center" class="active"><a href="{{ route('project_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp项目管理</a></li>
 		<li style="text-align: center"><a href="{{ route('notice_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-bell"></span>&nbsp&nbsp公告管理</a></li>
-	</ul>
+        <li style="text-align: center"><a href="{{ route('current_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-usd"></span>&nbsp&nbsp活期存款</a></li>
+    </ul>
 </div>
 <div class="container col-lg-10">
 	<h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp投资项目管理</h4>
-	<a href="javascript:;" class="md-trigger" data-modal="modal-1"><button class="btn btn-success">新增投资项目</button></a>
+	<a href="javascript:;" class="md-trigger" data-modal="modal-add"><button class="btn btn-success">新增投资项目</button></a>
     <!-- <hr> -->
     @if (count($projects))
             <table class="table" style="margin-top: 10px;">
@@ -27,6 +28,7 @@
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">可投金额</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">投资人数</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">项目状态</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666;">查看投资记录</td>
                 </tr>
                 @foreach ($projects as $project)
                 <tr>
@@ -40,12 +42,23 @@
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">¥{{ $project->amount_wait }}</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">{{ $project->invest_user_amount }}</td>
                     <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">@if($project->project_state == 0)未开始@elseif($project->project_state == 1)投资中@elseif($project->project_state == 2)回款中@else已回款@endif</td>
+                    <td class="text-center" style="vertical-align: middle;font-size: 18px;color: #666">
+                        @if($project->project_state != 0)
+                        <form method="POST" action="{{ route('invest_his') }}">
+                          {{ csrf_field() }}
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                        <button type="submit" class="btn btn-primary">查看</button>
+                    </form>
+                    @else
+                    投资未开始
+                    @endif
+                    </td>
                 </tr>
-                @endforeach
+              @endforeach
             </table>
             <div class="text-center">{!! $projects->render() !!}</div>
             @endif
-	<div class="md-modal md-effect-17" id="modal-1">
+	<div class="md-modal md-effect-17" id="modal-add">
     <div class="md-content">
       <h3>新增投资项目</h3>
       <div>

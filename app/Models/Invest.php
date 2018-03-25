@@ -42,4 +42,11 @@ class Invest extends Model implements AuthenticatableContract,
         $project=Project::findOrFail($project_id);
         return $project;
     }
+
+    
+    public function get_username($user_id)
+    {
+        $user=User::findOrFail($user_id);
+        return $user->username;
+    }
 }

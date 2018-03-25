@@ -16,6 +16,9 @@ class CreateWebsiteInfoTable extends Migration
             $table->increments('id');
             $table->float('total_investment')->default(0);
             $table->float('user_profit')->default(0);
+            $table->float('current_amount')->default(0);
+            $table->float('current_profit')->default(0);
+            $table->float('year_profit')->default(4.2);
             $table->timestamps();
         });
     }

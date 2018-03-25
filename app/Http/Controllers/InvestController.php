@@ -13,6 +13,7 @@ use App\Models\Invest;
 use App\Models\Website_info;
 use App\Models\Message;
 use App\Models\Transaction_details;
+use App\Models\Current;
 use Alert;
 use Mail;
 use Auth;
@@ -235,6 +236,118 @@ class InvestController extends Controller
                     Alert::info('对不起，余额不足！');
                     return redirect()->back();
                 }
+        }
+        else
+        {
+            Alert::error('资金密码输入有误，请重新输入！');
+            return redirect()->back();
+        }
+    }
+
+    public function current_deposit()
+    {
+        $currents=Current::where('user_id',Auth::user()->get()->id)->where('state',0)->get();
+        $current_amount=0;
+        foreach( $currents as $current )
+        {
+            $current_amount += $current->invest_amount;
+        }
+        $website_info=Website_info::findOrFail(1);
+        $currents=Current::where('user_id',Auth::user()->get()->id)->orderBy('invest_start_time','desc')->paginate(10);
+        return view('user.current_deposit',compact('currents','current_amount','website_info'));
+    }
+
+    public function deposit(Request $request)
+    {
+        if ($request->capital_password == Auth::user()->get()->capital_password)
+        {
+            $user=Auth::user()->get();
+            if($user->balance >= $request->invest_amount)
+            {
+                $user->balance -= $request->invest_amount;
+                $user->save();
+                $website_info=Website_info::findOrFail(1);
+                $website_info->current_amount += $request->invest_amount;
+                $website_info->save();
+                $current=Current::create([
+                    'user_id'=>$user->id,
+                    'invest_amount'=>$request->invest_amount,
+                    'invest_start_time'=>Carbon::now(),
+                    'state'=>0,
+                    'profit'=>0,
+                    ]);
+
+                $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'存款支出',
+                        'amount'=>$request->invest_amount,
+                        'remarks'=>'活期存款',
+                        ]);
+                $message=Message::create([
+                        'user_id'=>$user->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您已成功购买活期存款¥".$request->invest_amount."元！",
+                        'state'=>0,
+                        ]);
+
+                Alert::success('恭喜你，活期存款购买成功！');
+                return redirect()->back();
+            }
+            else
+            {
+                Alert::info('对不起，余额不足！');
+                return redirect()->back();
+            }
+        }
+        else{
+            Alert::error('资金密码输入有误，请重新输入！');
+            return redirect()->back();
+        }
+    }
+
+    public function current_redeem(Request $request)
+    {
+        if ($request->capital_password == Auth::user()->get()->capital_password)
+        {
+            $current=Current::findOrFail($request->current_id);
+            $current->invest_stop_time=Carbon::now();
+            $current->profit=$request->profit;
+            $current->state=1;
+            $current->save();
+            $user=Auth::user()->get();
+            $user->balance += $current->invest_amount;
+            $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'活期存款赎回',
+                        'amount'=>$current->invest_amount,
+                        'remarks'=>'活期存款赎回',
+                        ]);
+            $website_info=Website_info::findOrFail(1);
+            $website_info->current_amount -= $current->invest_amount;
+            $website_info->save();
+            $user->balance += $current->profit;
+            $user->profit += $current->profit;
+            $user->save();
+            $website_info=Website_info::findOrFail(1);
+                $website_info->current_profit += $current->profit;
+                $website_info->save();
+            $transaction_detail=Transaction_details::create([
+                        'user_id'=>$user->id,
+                        'transaction_time'=>Carbon::now(),
+                        'transaction_type'=>'利息收入',
+                        'amount'=>$current->profit,
+                        'remarks'=>'活期存款利息收入',
+                        ]);
+                $message=Message::create([
+                        'user_id'=>$user->id,
+                        'time'=>Carbon::now(),
+                        'text'=>"您已成功赎回活期存款¥".$current->invest_amount."元！",
+                        'state'=>0,
+                        ]);
+                Alert::success('恭喜你，活期存款赎回成功！');
+                return redirect()->back();
         }
         else
         {

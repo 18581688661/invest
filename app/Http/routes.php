@@ -67,6 +67,10 @@ Route::get('transferring','InvestController@transferring')->name('transferring')
 Route::post('transfer','InvestController@transfer')->name('transfer');//转让操作
 Route::post('buy_transfer','InvestController@buy_transfer')->name('buy_transfer');//购买转让
 
+Route::get('current_deposit','InvestController@current_deposit')->name('current_deposit');//活期存款页
+Route::post('deposit','InvestController@deposit')->name('deposit');//活期存款
+Route::post('current_redeem','InvestController@current_redeem')->name('current_redeem');//活期赎回
+
 //管理员
 
 Route::get('mana_login', 'SessionsController@mana_create')->name('mana_login');//管理员登录
@@ -76,6 +80,7 @@ Route::get('/mana_show','ManagerController@mana_show')->name('mana_show');//管�
 
 Route::get('project_manage','ManagerController@project_manage')->name('project_manage');//投资项目管理页面
 Route::post('project_add','ManagerController@project_add')->name('project_add');//投资项目新增
+Route::post('invest_his','ManagerController@invest_his')->name('invest_his');//查看投资记录
 
 Route::get('withdrawals_manage','ManagerController@withdrawals_manage')->name('withdrawals_manage');//提现管理页
 Route::post('withdrawals_handle','ManagerController@withdrawals_handle')->name('withdrawals_handle');//提现处理
@@ -83,6 +88,13 @@ Route::get('all_withdrawals','ManagerController@all_withdrawals')->name('all_wit
 
 Route::get('notice_manage','ManagerController@notice_manage')->name('notice_manage');//公告管理页
 Route::post('notice_add','ManagerController@notice_add')->name('notice_add');//公告新增
+Route::post('notice_del','ManagerController@notice_del')->name('notice_del');//公告删除
 
 Route::get('user_manage','ManagerController@user_manage')->name('user_manage');//用户管理
 Route::post('user_search','ManagerController@user_search')->name('user_search');//用户查找
+
+Route::get('current_manage','ManagerController@current_manage')->name('current_manage');//活期存款利率管理
+Route::post('current_profit','ManagerController@current_profit')->name('current_profit');//活期存款利率修改
+
+
+Route::get('testmap','UserController@testmap')->name('testmap');//

@@ -23,6 +23,7 @@
                 <li style="text-align: center"><a href="{{ route('project_transferring') }}" style="font-size: 16px">转让中项目</a></li>
                 <li style="text-align: center"><a href="{{ route('project_transferred') }}" style="font-size: 16px;color: #FFAC2A;font-weight: bold;">已转让项目</a></li>
                 <li style="text-align: center"><a href="{{ route('transferring') }}" style="font-size: 16px">转让中心</a></li>
+                <li style="text-align: center"><a href="{{ route('current_deposit') }}" style="font-size: 16px">活期存款</a></li>
             </ul>
         </div>
 		<li style="text-align: center"><a href="{{ route('certification') }}" style="font-size: 17px"><span class="glyphicon glyphicon-user"></span>&nbsp&nbsp实名认证</a></li>

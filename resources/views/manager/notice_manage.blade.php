@@ -8,31 +8,37 @@
 		<li style="text-align: center"><a href="{{ route('withdrawals_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-credit-card"></span>&nbsp&nbsp提现管理</a></li>
 		<li style="text-align: center"><a href="{{ route('project_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-yen"></span>&nbsp&nbsp项目管理</a></li>
 		<li style="text-align: center" class="active"><a href="{{ route('notice_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-bell"></span>&nbsp&nbsp公告管理</a></li>
-	</ul>
+        <li style="text-align: center"><a href="{{ route('current_manage') }}" style="font-size: 17px"><span class="glyphicon glyphicon-usd"></span>&nbsp&nbsp活期存款</a></li>
+    </ul>
 </div>
 <div class="container col-lg-10">
 	<h4 style="border-left: 3px solid #FFAC2A;font-size: 20px;margin-top: 22px">&nbsp&nbsp公告管理</h4>
-	<a href="javascript:;" class="md-trigger" data-modal="modal-1"><button class="btn btn-success">新增公告</button></a>
+	<a href="javascript:;" class="md-trigger" data-modal="modal-add"><button class="btn btn-success">新增公告</button></a>
     <hr>
     @if (count($notices))
     @foreach ($notices as $notice)
         <div class="panel panel-info text-center" style="">
           <div class="panel-heading">
-            <h5 style="font-size: 20px;">{{ $notice->title }}(发布时间：{{ $notice->time }})</h5>
-
+            <h5 style="font-size: 20px;line-height: 34px;">{{ $notice->title }}(发布时间：{{ $notice->time }})
+                <form style="float: right" method="POST" action="{{ route('notice_del') }}">
+                  {{ csrf_field() }}
+                  <input type="hidden" name="notice_id" value="{{ $notice->id }}">
+                  <button type="submit" class="btn btn-danger">删除</button>
+              </form>
+            </h5>
         </div>
         <div class="panel-body">
             <p style="font-size: 18px;color: #666">{{ $notice->text }}</p>
             <hr>
             <p style="font-size: 18px;color: #666" align="right">【清风理财】运营团队</p>
         </div>
-    </div>    
+    </div>
     @endforeach
     <div class="text-center">{!! $notices->render() !!}</div>
     @else
     暂无公告！
     @endif
-	<div class="md-modal md-effect-17" id="modal-1">
+	<div class="md-modal md-effect-17" id="modal-add">
     <div class="md-content">
       <h3>新增公告</h3>
       <div>

@@ -122,12 +122,12 @@
                 <form action="{{ route('invest') }}" method="POST" class="form-horizontal">
                   {{ csrf_field() }}
                   <div class="form-group">
-                    <label for="invest_amount" style="width: 160px;">投资金额(¥100起投)：</label>
-                    <input type="number" min="100" class="form-control" name="invest_amount" placeholder="请输入投资金额" required>
+                    <label for="invest_amount" style="width: 100px;">投资金额：</label>
+                    <input type="number" min="1" class="form-control" name="invest_amount" placeholder="请输入投资金额" required>
                 </div>
                 <input type="hidden" name="project_id" value="{{ $project->id}} ">
                 <div class="form-group">
-                    <label for="capital_password" style="width: 160px;">资金密码：</label>
+                    <label for="capital_password" style="width: 100px;">资金密码：</label>
                     <input type="password" class="form-control" name="capital_password" placeholder="请输入资金密码" required>
                 </div>
                 <div class="form-group">
@@ -206,6 +206,10 @@
             <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $today_invest }}</p>
             <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">累计为投资人赚取收益</p>
             <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $website_info->user_profit }}</p>
+            <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">平台实时活期存款金额</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $website_info->current_amount }}</p>
+            <p style="text-align: center;font-size: 20px;color: #777;margin-top: 8px">累计为用户赚取活期存款收益</p>
+            <p style="text-align: center;font-size: 20px;color: #FEB974;margin-top: 5px">¥{{ $website_info->current_profit }}</p>
         </div>
     </div>
 </div>

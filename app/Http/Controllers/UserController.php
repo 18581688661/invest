@@ -571,4 +571,9 @@ class UserController extends Controller
             }
         }
     }
+
+    public function testmap()
+    {
+        return view('user.testmap');
+    }
 }
