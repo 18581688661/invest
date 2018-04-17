@@ -42,10 +42,10 @@
     <button class="btn" style="background-color: #B9E563;font-size: 25px;color:white">¥{{ $current_amount }}元</button>
   </div>
   <div style="margin-top: 20px;">
-    <a href="javascript:;" class="md-trigger" data-modal="modal-1">
+    <a href="javascript:;" class="md-trigger" data-modal="modal-current">
       <button class="btn" style="background-color: #4CB0F9;font-size: 18px;color:white">存款</button>
     </a>
-    <div class="md-modal md-effect-17" id="modal-1">
+    <div class="md-modal md-effect-17" id="modal-current">
       <div class="md-content">
         <h3>活期存款</h3>
         <div>

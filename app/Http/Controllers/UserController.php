@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Current;
 use App\Models\Invest;
 use App\Models\Transaction_details;
 use App\Models\Withdrawals;
@@ -108,10 +109,15 @@ class UserController extends Controller
         $id=Auth::user()->get()->id;
         $user = User::findOrFail($id);
         $invests=Invest::where('user_id',$user->id)->whereIn('invest_state',[0,2])->get();
+        $currents=Current::where('user_id',$user->id)->where('state',0)->get();
         $invest_money=0;
         foreach($invests as $invest)
         {
             $invest_money += $invest->invest_amount;
+        }
+        foreach($currents as $current)
+        {
+            $invest_money += $current->invest_amount;
         }
         $withdrawals=Withdrawals::where('user_id',$user->id)->where('state',0)->get();
         $frozen_money=0;
